@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import {Layout} from './imports/layout.jsx';
-import { Ideas } from '/imports/collections';
+import {Ideas} from '/imports/collections';
 
 FlowRouter.route('/ideeen', {
   action(params, queryParams) {
@@ -27,7 +27,7 @@ const IdeasPage = React.createClass({
     return (
       <div>
         <a href='/nieuw-idee'>Voeg een idee toe</a>
-        <IdeasList ideas={this.data.ideas} />
+        <IdeasList {...this.data} />
       </div>
     );
   }
@@ -51,8 +51,15 @@ const IdeasList = React.createClass({
   }
 });
 
-const IdeasListItem = ({idea}) => (
-  <div className='idea'>
-    {idea.title}
-  </div>
-)
+const IdeasListItem = React.createClass({
+  getSubmitters() {
+    return this.props.idea.submitters.join(' en ');
+  },
+  render() {
+    return (
+      <div className='idea'>
+        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.getSubmitters()}
+      </div>
+    )
+  }
+})

@@ -11,3 +11,7 @@ Meteor.publish('ideas.paged', (page: number = 1):object => {
     skip: (page-1)*ITEMS_PER_PAGE
   });
 });
+
+Meteor.publish('idea', (id: string):object => {
+  return Ideas.find({_id:id});
+});
