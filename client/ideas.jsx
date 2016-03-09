@@ -52,13 +52,10 @@ const IdeasList = React.createClass({
 });
 
 const IdeasListItem = React.createClass({
-  getSubmitters() {
-    return this.props.idea.submitters.join(' en ');
-  },
   render() {
     return (
       <div className='idea'>
-        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.getSubmitters()}
+        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.props.idea.submitters}
       </div>
     )
   }
