@@ -27,8 +27,9 @@ const IdeaPage = React.createClass({
     )
     return (
       <div className="pane">
-        <h1>{this.data.idea.title}</h1>
-        <h2>door {this.data.idea.authors}</h2>
+        <h2>{this.data.idea.title}</h2>
+        <h3>door {this.data.idea.authors}</h3>
+        {this.data.idea.description}
       </div>
     );
   }

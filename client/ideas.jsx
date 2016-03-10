@@ -26,7 +26,7 @@ const IdeasPage = React.createClass({
   render() {
     return (
       <div className="pane">
-        <a href='/nieuw-idee'>Voeg een idee toe</a>
+        <a href='/nieuw-idee'>Voeg jouw idee toe</a>
         <IdeasList {...this.data} />
       </div>
     );
@@ -44,19 +44,22 @@ const IdeasList = React.createClass({
     }
     const ideasNodes = this.props.ideas.map((idea) => <IdeasListItem key={idea._id} idea={idea} />);
     return (
-      <div>
+      <ul className='ideas'>
         {ideasNodes}
-      </div>
+      </ul>
     )
   }
 });
 
 const IdeasListItem = React.createClass({
+  onClick() {
+    FlowRouter.go('/ideeen/' + this.props.idea._id);
+  },
   render() {
     return (
-      <div className='idea'>
-        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.props.idea.authors}
-      </div>
+      <li className='idea' onClick={this.onClick}>
+        <div className="title">{this.props.idea.title}</div>
+      </li>
     )
   }
 })
