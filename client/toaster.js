@@ -2,5 +2,5 @@
 
 toastr.options = {
   closeButton: true,
-  positionClass: 'toast-bottom-left'
+  positionClass: 'toast-bottom-right'
 };

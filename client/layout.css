@@ -25,6 +25,7 @@ header {
   padding: 0 30px;
   height: 60px;
   width:100%;
+  overflow:hidden;
 }
 
 h1 {

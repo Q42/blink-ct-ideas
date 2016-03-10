@@ -36,10 +36,23 @@ const NewIdea = React.createClass({
       <div className="pane">
         Tof dat je een idee hebt!
         <form onSubmit={this.submitForm}>
-          <input name="authors" type="text" onChange={this.changeInput} />
-          <input name="title" type="text" onChange={this.changeInput} />
-          <textarea name="description" onChange={this.changeInput}></textarea>
-          <input type="submit" />
+          <label>
+            Wat zijn jullie namen?
+            <input name="authors" type="text" onChange={this.changeInput} />
+          </label>
+          <label>
+            Wat is de naam van jullie idee?
+            <input name="title" type="text" onChange={this.changeInput} />
+          </label>
+          <label>
+            Schrijf hier kort op wat je idee is
+            <textarea name="description" onChange={this.changeInput}></textarea>
+          </label>
+          <label>
+            En je kan er ook nog foto's bij doen als je wilt
+            <input type="file" />
+          </label>
+          <input className="cta" type="submit" value="Verstuur naar het Lab" />
         </form>
       </div>
     )
