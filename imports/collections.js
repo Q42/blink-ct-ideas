@@ -1,38 +1,55 @@
 export const Ideas = new Mongo.Collection('ideas');
 
+Ideas.allow({
+  insert(userId, doc) {
+    return true;
+  }
+})
+
 Ideas.attachSchema({
   createdDate: {
     label: 'Aangemaakt',
     type: Date,
     denyUpdate: true,
-    defaultValue: () => new Date
+    autoValue() {
+      if ( this.isInsert ) {
+        return new Date;
+      }
+    }
   },
   updatedDate: {
     label: 'Laatst aangepast',
     type: Date,
-    autoValue: () => new Date
+    autoValue() {
+      return new Date;
+    }
   },
-  submitters: {
+  authors: {
     label: 'Auteur(s)',
-    type: String
+    type: String,
+    denyUpdate: true,
   },
   title: {
     label: 'Idee',
-    type:String
+    type:String,
+    denyUpdate: true,
   },
   description: {
     label: 'Omschrijving',
     type: String,
-    optional: true
+    optional: true,
+    denyUpdate: true,
   },
   attachments: {
     label: 'Afbeeldingen',
     type: [String],
-    optional: true
+    optional: true,
+    denyUpdate: true,
   },
   reactions: {
     label: 'Reacties',
     optional: true,
+    denyInsert: true,
     type: [
       {
         author: {label: 'Q42\'er', type:String},

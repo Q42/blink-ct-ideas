@@ -23,11 +23,12 @@ const IdeaPage = React.createClass({
 
   render() {
     if (!this.data.idea) return (
-      <div>Loading...</div>
+      <div className="pane">Loading...</div>
     )
     return (
-      <div>
+      <div className="pane">
         <h1>{this.data.idea.title}</h1>
+        <h2>door {this.data.idea.authors}</h2>
       </div>
     );
   }

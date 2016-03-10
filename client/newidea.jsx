@@ -33,10 +33,10 @@ const NewIdea = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="pane">
         Tof dat je een idee hebt!
         <form onSubmit={this.submitForm}>
-          <input name="submitters" type="text" onChange={this.changeInput} />
+          <input name="authors" type="text" onChange={this.changeInput} />
           <input name="title" type="text" onChange={this.changeInput} />
           <textarea name="description" onChange={this.changeInput}></textarea>
           <input type="submit" />

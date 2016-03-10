@@ -25,7 +25,7 @@ const IdeasPage = React.createClass({
 
   render() {
     return (
-      <div>
+      <div className="pane">
         <a href='/nieuw-idee'>Voeg een idee toe</a>
         <IdeasList {...this.data} />
       </div>
@@ -42,7 +42,7 @@ const IdeasList = React.createClass({
         </div>
       )
     }
-    const ideasNodes = this.props.ideas.map((idea) => <IdeasListItem idea={idea} />);
+    const ideasNodes = this.props.ideas.map((idea) => <IdeasListItem key={idea._id} idea={idea} />);
     return (
       <div>
         {ideasNodes}
@@ -55,7 +55,7 @@ const IdeasListItem = React.createClass({
   render() {
     return (
       <div className='idea'>
-        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.props.idea.submitters}
+        <a href={'/ideeen/' + this.props.idea._id}>{this.props.idea.title}</a> door {this.props.idea.authors}
       </div>
     )
   }

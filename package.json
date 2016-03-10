@@ -1,7 +1,7 @@
 {
   "name": "blink-ct-feedback",
   "version": "0.0.1",
-  "description": "De ideeen van het jongeren lab",
+  "description": "Verzamelplaats voor ideeën van het Junior Computer Lab",
   "main": "blink-ct-feedback.js",
   "dependencies": {
     "react": "^0.14.7",

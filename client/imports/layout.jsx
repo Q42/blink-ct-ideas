@@ -1,11 +1,13 @@
 import React from 'react';
 
-// define and export our Layout component
 export const Layout = ({content}) => (
-  <div>
-    <h1>Welkom bij de Q42 Ideeënbus</h1>
-    
-    <hr />
-    <div>{content}</div>
+  <div className="layout">
+    <header>
+      <h1><a href="/">Junior Computer Lab - Ideeënbus</a></h1>
+    </header>
+
+    <div className="panes">
+      {content}
+    </div>
   </div>
 );
