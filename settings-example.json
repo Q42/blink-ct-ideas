@@ -1,7 +1,7 @@
 {
   "galaxy.meteor.com": {
     "env": {
-      "ROOT_URL": "https://junior.q42.nl",
+      "ROOT_URL": "https://ideeenbus.q42.nl",
       "MONGO_URL": "",
       "MONGO_OPLOG_URL": ""
     }
