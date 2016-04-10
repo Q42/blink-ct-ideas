@@ -20,59 +20,73 @@ var uploader = new Slingshot.Upload("myFileUploads");
 
 const NewIdea = React.createClass({
   getInitialState() {
-    return {};
+    return { uploading: false };
   },
   changeInput(e) {
-    this.state[e.target.name] = e.target.value;
+    let changedObj = {};
+    changedObj[e.target.name] = e.target.value;
+    this.setState(changedObj);
   },
   submitForm(e) {
     e.preventDefault();
-    console.log('submitting', this.state);
-    Ideas.insert(this.state, function(err, _id) {
+    this.setState({uploading:true});
+    Ideas.insert(this.state, (err, _id) => {
       if (err) {
         console.error(err);
-        toastr.error('Er is iets mis gegaan:' + (err.reason || err), 'Uh-oh');
+        toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
       } else {
-        uploader.send(document.getElementById('file').files[0], function (error, downloadUrl) {
-          if (error) {
-            console.error(error);
-            toastr.error('Er is iets mis gegaan:' + (uploader.xhr.response), 'Uh-oh');
-          }
-          else {
-            Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
-            toastr.info('Kom over een paar dagen terug voor antwoord van een Q42\'er op je idee.', 'Bedankt voor je idee!');
-          }
-          FlowRouter.go('/ideeen/' + _id);
-        });
+        if (document.getElementById('file').files.length) {
+          uploader.send(document.getElementById('file').files[0], (error, downloadUrl) => {
+            if (error) {
+              console.error(error);
+              toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
+            }
+            else {
+              Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
+              this.afterSuccessfulSubmit(_id);
+            }
+          });
+        } else {
+          this.afterSuccessfulSubmit(_id);
+        }
       }
     });
   },
+  afterSuccessfulSubmit(_id) {
+    FlowRouter.go('/ideeen/' + _id);
+  },
   render() {
+    let submitButton;
+    if (this.state.uploading)
+      submitButton = <input className="cta" type="submit" value="Bezig met versturen..." disabled="disabled" />
+    else
+      submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />
+
     return (
       <div className="pane">
         Tof dat je een idee hebt!
         <form onSubmit={this.submitForm}>
           <label>
             Wat zijn jullie namen?
-            <input name="authors" type="text" onChange={this.changeInput} />
+            <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
             Als je een mailtje wil krijgen als Lukas of een andere Q42'er heeft gereageerd op je idee, vul die hier in.
-            <input name="emails" type="text" onChange={this.changeInput} />
+            <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>
             Wat is de naam van jullie idee?
-            <input name="title" type="text" onChange={this.changeInput} />
+            <input name="title" type="text" onChange={this.changeInput} value={this.state.title} />
           </label>
           <label>
             Schrijf hier kort op wat je idee is
-            <textarea name="description" onChange={this.changeInput}></textarea>
+            <textarea name="description" onChange={this.changeInput}>{this.state.description}</textarea>
           </label>
           <label>
             En je kan er ook nog foto's bij doen als je wilt
             <input id="file" type="file" />
           </label>
-          <input className="cta" type="submit" value="Verstuur naar het Lab" />
+          {submitButton}
         </form>
       </div>
     )
