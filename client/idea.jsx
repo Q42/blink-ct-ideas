@@ -29,8 +29,10 @@ const IdeaPage = React.createClass({
       <div className="pane">
         <h2>{this.data.idea.title}</h2>
         <h3>door {this.data.idea.authors}</h3>
-        {this.data.idea.description}<br />
-        {this.data.idea.attachments}
+        {this.data.idea.description}
+        <p>
+          <img src={this.data.idea.attachments} className="detail" />
+        </p>
       </div>
     );
   }
