@@ -16,8 +16,6 @@ Slingshot.fileRestrictions("myFileUploads", {
   maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited)
 });
 
-var uploader = new Slingshot.Upload("myFileUploads");
-
 const NewIdea = React.createClass({
   getInitialState() {
     return { uploading: false };
@@ -35,17 +33,27 @@ const NewIdea = React.createClass({
         console.error(err);
         toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
       } else {
-        if (document.getElementById('file').files.length) {
-          uploader.send(document.getElementById('file').files[0], (error, downloadUrl) => {
-            if (error) {
-              console.error(error);
-              toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
-            }
-            else {
-              Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
-              this.afterSuccessfulSubmit(_id);
-            }
+        const files = $('#file').get(0).files;
+        let filesToUpload = files.length;
+        if (files.length) {
+          const uploaders = _.map(files, (file) => {
+            var uploader = new Slingshot.Upload("myFileUploads");
+            uploader.send(file, (error, downloadUrl) => {
+              filesToUpload--;
+              if (error) {
+                console.error(error);
+                toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
+              }
+              else {
+                Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
+                if (filesToUpload == 0) {
+                  this.afterSuccessfulSubmit(_id);
+                }
+              }
+            });
+            return uploader;
           });
+
         } else {
           this.afterSuccessfulSubmit(_id);
         }
@@ -71,7 +79,7 @@ const NewIdea = React.createClass({
             <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
-            Als je een mailtje wil krijgen als Lukas of een andere Q42'er heeft gereageerd op je idee, vul die hier in.
+            Als je een mailtje wil krijgen als Lukas, Kristin, of een andere Q42'er heeft gereageerd op je idee, vul die hier in.
             <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>
@@ -84,7 +92,7 @@ const NewIdea = React.createClass({
           </label>
           <label>
             En je kan er ook nog foto's bij doen als je wilt
-            <input id="file" type="file" />
+            <input id="file" type="file" multiple="true" />
           </label>
           {submitButton}
         </form>

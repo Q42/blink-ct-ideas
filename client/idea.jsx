@@ -25,14 +25,22 @@ const IdeaPage = React.createClass({
     if (!this.data.idea) return (
       <div className="pane">Loading...</div>
     )
+
+    let attachments = <br />
+    if (this.data.idea.attachments) {
+      attachments = this.data.idea.attachments.map((att) => {
+        return (<p>
+          <img src={att} className="detail" />
+        </p>);
+      });
+    }
+
     return (
       <div className="pane">
         <h2>{this.data.idea.title}</h2>
         <h3>door {this.data.idea.authors}</h3>
         {this.data.idea.description}
-        <p>
-          <img src={this.data.idea.attachments} className="detail" />
-        </p>
+        {attachments}
       </div>
     );
   }
