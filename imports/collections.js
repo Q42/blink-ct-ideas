@@ -29,6 +29,11 @@ Ideas.attachSchema({
     type: String,
     denyUpdate: true,
   },
+  emails: {
+    label: 'Email(s)',
+    type: String,
+    denyUpdate: true,
+  },
   title: {
     label: 'Idee',
     type:String,

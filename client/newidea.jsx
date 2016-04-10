@@ -11,6 +11,13 @@ FlowRouter.route("/nieuw-idee", {
   }
 });
 
+Slingshot.fileRestrictions("myFileUploads", {
+  allowedFileTypes: ["image/png", "image/jpeg", "image/gif"],
+  maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited)
+});
+
+var uploader = new Slingshot.Upload("myFileUploads");
+
 const NewIdea = React.createClass({
   getInitialState() {
     return {};
@@ -26,8 +33,17 @@ const NewIdea = React.createClass({
         console.error(err);
         toastr.error('Er is iets mis gegaan:' + (err.reason || err), 'Uh-oh');
       } else {
-        toastr.info('Kom over een paar dagen terug voor antwoord van een Q42\'er op je idee.', 'Bedankt voor je idee!');
-        FlowRouter.go('/ideeen/' + _id);
+        uploader.send(document.getElementById('file').files[0], function (error, downloadUrl) {
+          if (error) {
+            console.error(error);
+            toastr.error('Er is iets mis gegaan:' + (uploader.xhr.response), 'Uh-oh');
+          }
+          else {
+            Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
+            toastr.info('Kom over een paar dagen terug voor antwoord van een Q42\'er op je idee.', 'Bedankt voor je idee!');
+          }
+          FlowRouter.go('/ideeen/' + _id);
+        });
       }
     });
   },
@@ -41,6 +57,10 @@ const NewIdea = React.createClass({
             <input name="authors" type="text" onChange={this.changeInput} />
           </label>
           <label>
+            Als je een mailtje wil krijgen als Lukas of een andere Q42'er heeft gereageerd op je idee, vul die hier in.
+            <input name="emails" type="text" onChange={this.changeInput} />
+          </label>
+          <label>
             Wat is de naam van jullie idee?
             <input name="title" type="text" onChange={this.changeInput} />
           </label>
@@ -50,7 +70,7 @@ const NewIdea = React.createClass({
           </label>
           <label>
             En je kan er ook nog foto's bij doen als je wilt
-            <input type="file" />
+            <input id="file" type="file" />
           </label>
           <input className="cta" type="submit" value="Verstuur naar het Lab" />
         </form>

@@ -2,3 +2,4 @@
 .meteor/meteorite
 npm-debug.log
 settings-prod.json
+google-cloud-service-key.pem
