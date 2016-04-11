@@ -3,7 +3,7 @@
   "GoogleCloudBucket": "blink-ct-ideas",
   "galaxy.meteor.com": {
     "env": {
-      "ROOT_URL": "https://juniorcomputerlab.q42.nl",
+      "ROOT_URL": "https://juniorcomputerlab.q42.com",
       "MONGO_URL": "",
       "MONGO_OPLOG_URL": ""
     }
