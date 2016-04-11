@@ -3,3 +3,4 @@
 npm-debug.log
 settings-prod.json
 google-cloud-service-key.pem
+node_modules/
