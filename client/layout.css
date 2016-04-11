@@ -88,13 +88,27 @@ h1 em {
 }
 
 .panes .pane {
-  width: 50%;
   min-width: 300px;
   max-width: 800px;
   border: 2px solid #798587;
   border-radius: 10px;
   background: rgba(255,255,255,0.9);
   padding: 30px 60px 60px 60px;
+  overflow-y: auto;
+}
+
+@media(max-width: 500px) {
+  .panes {
+    padding: 20px;
+  }
+  .panes .pane {
+    padding: 30px;
+  }
+}
+@media(min-width: 800px) {
+  .panes .pane {
+    width: 600px;
+  }
 }
 
 .ideas {
