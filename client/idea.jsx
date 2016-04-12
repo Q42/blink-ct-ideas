@@ -41,6 +41,30 @@ const IdeaPage = React.createClass({
         <h3>door {this.data.idea.authors}</h3>
         {this.data.idea.description}
         {attachments}
+        <Reactions reactions={this.data.idea.reactions} />
+      </div>
+    );
+  }
+});
+
+const Reactions = React.createClass({
+  login(e) {
+    e.preventDefault();
+    Meteor.loginWithGoogle();
+  },
+
+  render() {
+    reactionsHtml = (this.props.reactions || []).map((reaction) => {
+      return (<p>
+        <bold>{reaction.author}</bold>: {reaction.message}
+      </p>);
+    });
+
+    return (
+      <div>
+        <h3>Reacties van Q42'ers</h3>
+        {reactionsHtml}
+        Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren</a>!
       </div>
     );
   }
