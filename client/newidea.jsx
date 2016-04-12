@@ -79,7 +79,7 @@ const NewIdea = React.createClass({
             <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
-            Als je een mailtje wil krijgen als Lukas, Kristin, of een andere Q42'er heeft gereageerd op je idee, vul die hier in.
+            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd? Vul dan hier een e-mailadres in:
             <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>
@@ -87,11 +87,11 @@ const NewIdea = React.createClass({
             <input name="title" type="text" onChange={this.changeInput} value={this.state.title} />
           </label>
           <label>
-            Schrijf hier kort op wat je idee is
+            Schrijf hier kort op wat jullie idee is:
             <textarea name="description" onChange={this.changeInput}>{this.state.description}</textarea>
           </label>
           <label>
-            En je kan er ook nog foto's bij doen als je wilt
+            En je kan er ook nog foto's bij doen als je wilt:
             <input id="file" type="file" multiple="true" />
           </label>
           {submitButton}
