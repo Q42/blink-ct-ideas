@@ -72,14 +72,14 @@ const NewIdea = React.createClass({
 
     return (
       <div className="pane">
-        Tof dat je een idee hebt!
+        <h2>Tof dat je een idee hebt!</h2>
         <form onSubmit={this.submitForm}>
           <label>
             Wat zijn jullie namen?
             <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
-            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd? Vul dan hier een e-mailadres in:
+            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in
             <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>

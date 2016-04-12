@@ -12,7 +12,7 @@ FlowRouter.route("/", {
 
 const Homepage = () => (
   <div className="pane small">
-    <h2>Welkom bij de <em>Junior Computer Lab ideeënbus</em>!</h2>
+    <h2>Welkom bij de Junior Computer Lab ideeënbus!</h2>
 
     <p>Bij Q42 bedenken en programmeren we slimme producten.
       Maar we hebben jullie hulp nodig! We willen ook slimme producten voor kinderen maken.
