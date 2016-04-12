@@ -84,7 +84,10 @@ header h1 {
 header a {
   color: white;
 }
-header a:hover {
+header a:hover,
+header a:focus,
+header a:visited,
+header a:active {
   color: white;
   text-decoration: none;
 }
