@@ -12,6 +12,13 @@ Meteor.publish('ideas.paged', (page: number = 1):object => {
   });
 });
 
+Meteor.publish('ideas.all', () => {
+  console.log('publishing ideas.all');
+  return Ideas.find({}, {
+    sort: { updatedDate: -1 }
+  });
+});
+
 Meteor.publish('idea', (id: string):object => {
   return Ideas.find({_id:id});
 });

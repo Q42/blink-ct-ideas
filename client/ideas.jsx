@@ -13,11 +13,22 @@ FlowRouter.route('/ideeen', {
 
 GlobalIdeas = Ideas;
 
+// no paging, just show everything always, and first 10 quickly
+Meteor.startup(function(){
+  console.time('ideas.paged(1)');
+  Meteor.subscribe('ideas.paged', 1, () => {
+    console.timeEnd('ideas.paged(1)')
+    console.time('ideas.all');
+    Meteor.subscribe('ideas.all', () => {
+      console.timeEnd('ideas.all')
+    });
+  });
+});
+
 const IdeasPage = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    const sub = Meteor.subscribe('ideas.paged', this.props.page);
     return {
       ideas: Ideas.find({},{sort: {updatedDate: -1}}).fetch()
     }
