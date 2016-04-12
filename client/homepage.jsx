@@ -11,8 +11,8 @@ FlowRouter.route("/", {
 });
 
 const Homepage = () => (
-  <div className="pane">
-    <h2>Welkom bij de Junior Computer Lab ideeënbus!</h2>
+  <div className="pane small">
+    <h2>Welkom bij de <em>Junior Computer Lab ideeënbus</em>!</h2>
 
     <p>Bij Q42 bedenken en programmeren we slimme producten.
       Maar we hebben jullie hulp nodig! We willen ook slimme producten voor kinderen maken.
@@ -25,8 +25,9 @@ const Homepage = () => (
     <p>Als je je e-mailadres achter laat, dan krijg je van Lukas, Kristin of een andere Q42'er
       te horen wat zij van je idee vinden.</p>
 
-    <p><a href="/nieuw-idee">Stuur je idee op</a></p>
-
-    <p><a href="/ideeen">Bekijk alle ideeën</a></p>
+    <p className="calls-to-action">
+      <a href="/nieuw-idee" className="btn-send-idea">Stuur je idee op</a>
+      <a href="/ideeen" className="btn-show-ideas">Bekijk alle ideeën</a>
+    </p>
   </div>
 );

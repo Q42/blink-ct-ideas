@@ -29,6 +29,10 @@ body > div, .layout {
   flex-direction: column;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
 .col {
   width: 100%;
   max-width: 1024px;
@@ -39,7 +43,7 @@ header {
   position: relative;
   height: 150px;
   color: #fff;
-  padding: 0 30px;
+  padding: 0 20px;
   width:100%;
   overflow:hidden;
   background: #272822;
@@ -54,15 +58,20 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0 30px 0 30px;
-  line-height: 130px;
-  font-weight: 700;
+  padding: 80px 30px 0 30px;
+  height: 150px;
+  color: white;
+  text-decoration: none;
+  background: rgba(252,152,43,0.9) url(/ideas.svg) 50% 20px no-repeat;
+  background-size: 60px 60px;
+  transition: all 0.2s ease;
+}
+.link-ideas:hover {
+  background-color: rgba(100,180,240,0.9);
   color: white;
   text-decoration: none;
 }
-.link-ideas:before {
-  content:'[icoon lampje] ';
-}
+
 header .col {
   display: flex;
   justify-content: space-around;
@@ -72,8 +81,22 @@ header h1 {
   font-size: 32px;
   margin: 0;
 }
+header a {
+  color: white;
+}
+header a:hover {
+  color: white;
+  text-decoration: none;
+}
 h1 em {
   color: #e0d361;
+  font-style: normal;
+}
+h2 {
+  font-weight: 700;
+}
+h2 em {
+  text-transform: uppercase;
   font-style: normal;
 }
 
@@ -82,7 +105,7 @@ h1 em {
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 60px;
+  padding: 30px;
   background: url(/BG_CodeUur-index.png) no-repeat 50% 50%;
   background-size: cover;
 }
@@ -93,18 +116,114 @@ h1 em {
   border: 2px solid #798587;
   border-radius: 10px;
   background: rgba(255,255,255,0.9);
-  padding: 30px 60px 60px 60px;
+  padding: 20px 60px 30px 60px;
   overflow-y: auto;
 }
 
+.calls-to-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.calls-to-action a {
+  display: block;
+  border-radius: 20px;
+  padding: 90px 20px 10px 20px;
+  background-size: 80px 80px;
+  width: 50%;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;
+  transition: all 0.2s ease-out;
+}
+.calls-to-action a + a {
+  margin-left: 20px;
+}
+.calls-to-action a.btn-send-idea {
+  background: rgba(100,180,240,1) url(/send-idea.svg) 45% 12px no-repeat;
+}
+.calls-to-action a.btn-show-ideas {
+  background: rgba(100,180,240,1) url(/ideas.svg) 50% 8px no-repeat;
+}
+
+.calls-to-action a:hover {
+  background-color: rgba(252,152,43,1);
+}
+
+
+
 @media(max-width: 500px) {
+  header {
+    height: 80px;
+    padding-left: 90px;
+  }
+  header h1 {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+
+  .link-ideas {
+    text-indent: 9999px;
+    overflow: hidden;
+    width: 70px;
+    padding: 0;
+    height: 70px;
+    background-position: 50% 50%;
+    background-size: 40px 40px;
+  }
+
   .panes {
     padding: 20px;
   }
   .panes .pane {
-    padding: 30px;
+    padding: 10px 30px 20px 30px;
+  }
+  .calls-to-action {
+    display: block;
+  }
+  .calls-to-action a {
+    width: 100%;
+    padding: 20px 20px 20px 84px;
+    text-align: left;
+    background-position: 10px 50% !important;
+    background-size: 50px 50px !important;
+  }
+  .calls-to-action a + a {
+    margin-top: 20px;
+    margin-left: 0;
   }
 }
+
+@media(min-width: 500px) and (max-width: 800px) {
+  header {
+    height: 90px;
+    padding-left: 100px;
+    text-align: left;
+  }
+  header h1 {
+    font-size: 24px;
+  }
+  header .col {
+    justify-content: flex-start;
+  }
+  .link-ideas {
+    padding: 50px 0 0 0;
+    height: 80px;
+    width: 80px;
+    background-position: 50% 10px;
+    background-size: 40px 40px;
+    font-size: 14px;
+    text-align: center;
+  }
+  .panes .pane {
+    padding: 10px 30px;
+  }
+}
+
 @media(min-width: 800px) {
   .panes .pane {
     width: 600px;
