@@ -48,11 +48,6 @@ const IdeaPage = React.createClass({
 });
 
 const Reactions = React.createClass({
-  login(e) {
-    e.preventDefault();
-    Meteor.loginWithGoogle();
-  },
-
   render() {
     reactionsHtml = (this.props.reactions || []).map((reaction) => {
       return (<p>
@@ -64,8 +59,44 @@ const Reactions = React.createClass({
       <div>
         <h3>Reacties van Q42'ers</h3>
         {reactionsHtml}
-        Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren</a>!
+        <AddReaction />
       </div>
     );
+  }
+});
+
+
+const AddReaction = React.createClass({
+  login(e) {
+    e.preventDefault();
+    Meteor.loginWithGoogle();
+  },
+
+  submitForm() {
+    console.log('yo!');
+  },
+
+  changeDescription() {
+    console.log('yo!');
+  },
+
+  render() {
+    if (!Meteor.userId) {
+      return (
+        <p>
+          Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren</a>!
+        </p>
+      );
+    } else {
+      return (
+        <form onSubmit={this.submitForm}>
+          <label>
+            Wat vind je van dit idee?
+            <textarea name="description" onChange={this.changeDescription}></textarea>
+          </label>
+          <input className="cta" type="submit" value="Voeg deze reactie toe" />
+        </form>
+      );
+    }
   }
 });
