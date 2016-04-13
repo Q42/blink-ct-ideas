@@ -12,6 +12,17 @@ Ideas.allow({
   }
 })
 
+var reactionSchema = new SimpleSchema({
+  author: {
+    label: 'Q42\'er',
+    type:String
+  },
+  message: {
+    label: 'Feedback',
+    type:String
+  }
+});
+
 Ideas.attachSchema({
   createdDate: {
     label: 'Aangemaakt',
@@ -62,12 +73,8 @@ Ideas.attachSchema({
     label: 'Reacties',
     optional: true,
     denyInsert: true,
-    type: [
-      {
-        author: {label: 'Q42\'er', type:String},
-        message: {label: 'Feedback', type:String}
-      }
-    ]
+    blackbox: true,
+    type: [reactionSchema]
   }
 });
 

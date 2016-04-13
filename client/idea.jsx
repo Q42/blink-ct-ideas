@@ -41,7 +41,7 @@ const IdeaPage = React.createClass({
         <h3>door {this.data.idea.authors}</h3>
         {this.data.idea.description}
         {attachments}
-        <Reactions reactions={this.data.idea.reactions} />
+        <Reactions idea={this.data.idea._id} reactions={this.data.idea.reactions} />
       </div>
     );
   }
@@ -59,7 +59,7 @@ const Reactions = React.createClass({
       <div>
         <h3>Reacties van Q42'ers</h3>
         {reactionsHtml}
-        <AddReaction />
+        <AddReaction idea={this.props.idea} />
       </div>
     );
   }
@@ -67,21 +67,29 @@ const Reactions = React.createClass({
 
 
 const AddReaction = React.createClass({
+  getInitialState() {
+    return { userId: Meteor.userId(), description: '' };
+  },
+
   login(e) {
     e.preventDefault();
-    Meteor.loginWithGoogle();
+    Meteor.loginWithGoogle(() => {
+      this.setState({ userId: Meteor.userId() });
+    });
   },
 
-  submitForm() {
-    console.log('yo!');
+  submitForm(e) {
+    e.preventDefault();
+    console.log('storing', this.state);
+    Meteor.call('idea.reactions.push', this.props.idea, this.state.description);
   },
 
-  changeDescription() {
-    console.log('yo!');
+  changeDescription(e) {
+    this.setState({ description: e.target.value });
   },
 
   render() {
-    if (!Meteor.userId) {
+    if (!this.state.userId) {
       return (
         <p>
           Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren</a>!
@@ -91,8 +99,8 @@ const AddReaction = React.createClass({
       return (
         <form onSubmit={this.submitForm}>
           <label>
-            Wat vind je van dit idee?
-            <textarea name="description" onChange={this.changeDescription}></textarea>
+            Hey Q42'er! Wat vind je van dit idee?
+            <textarea name="description" onChange={this.changeDescription} value={this.state.description}></textarea>
           </label>
           <input className="cta" type="submit" value="Voeg deze reactie toe" />
         </form>

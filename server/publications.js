@@ -22,3 +22,20 @@ Meteor.publish('ideas.all', () => {
 Meteor.publish('idea', (id: string):object => {
   return Ideas.find({_id:id});
 });
+
+Meteor.methods({
+  'idea.reactions.push'(idea, message) {
+    const email = Meteor.users.findOne(this.userId).services.google.email;
+    console.log('storing', idea, email, message);
+    Ideas.update({_id: idea}, {
+      $push: {
+        reactions: {
+          author: email,
+          message: message
+        }
+      }
+    }, (err, res) => {
+      console.log(err, res);
+    });
+  }
+})
