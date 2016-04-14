@@ -60,8 +60,8 @@ header {
   left: 0;
   height: 150px;
   width: 130px;
-  background: rgba(255,255,255,0.1) url(/home.svg) 50% 30% no-repeat;
-  background-size: 90px 90px;
+  background: rgba(255,255,255,0.1) url(/home.svg) 50% 32% no-repeat;
+  background-size: 60px 60px;
   transition: all 0.2s ease;
   text-align: center;
   text-indent: 200%;
@@ -115,8 +115,9 @@ h2 em {
 }
 
 .panes .pane {
+  position: relative;
   min-width: 300px;
-  max-width: 800px;
+  width: 100%;
   border: 2px solid #798587;
   border-radius: 10px;
   background: rgba(255,255,255,0.9);
@@ -156,7 +157,113 @@ h2 em {
   background-color: rgba(252,152,43,1);
 }
 
+.ideas {
+  list-style: none;
+  margin: 0;
+  padding: 85px 0 0 0;
+  overflow: auto;
+  zoom: 1;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: calc(100% + 10px);
+}
+.idea {
+  display: block;
+  width: 25%;
+  position: relative;
+  padding-top: 25%;
+  overflow: hidden;
+}
+.idea-item {
+  position: absolute;
+  top:0;
+  left:0;
+  right: 10px;
+  bottom:10px;
+  z-index: 1;
+  border: 2px solid #636363;
+  background-color: rgba(50,50,50,1);
+  background-size: cover;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  color: #d0d0d0;
+}
 
+img.detail {
+  max-width: 100%;
+}
+.btn-add-idea {
+  display: block;
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  padding: 10px 40px 10px 0;
+  background-size: 42px 42px !important;
+  width: 240px;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  background: rgba(100,180,240,1) url(/send-idea.svg) 90% 50% no-repeat;
+  border-radius: 5px;
+  transition: all 0.2s ease-out;
+}
+
+.btn-add-idea:hover {
+  background-color: rgba(252,152,43,1);
+  border-color: rgba(252,152,43,0.5);
+  color: white;
+  text-decoration: none;
+}
+.tile-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  background: rgba(0,0,0,0.6);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.tile-overlay * {
+  transition: transform 0.2s ease-out;
+}
+.tile-overlay .title {
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.tile-overlay .description {
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  color: white;
+  font-size: 14px;
+  overflow-y: auto;
+  color: white;
+}
+.tile-overlay:hover .title {
+  transform: translateY(200%);
+}
+
+.tile-overlay:hover .description {
+  transform: translateY(0px);
+}
 
 @media(max-width: 500px) {
   header {
@@ -177,14 +284,15 @@ h2 em {
   .btn-home {
     height: 70px;
     width: 70px;
-    background-size: 50px 50px;
+    background-size: 30px 30px;
+    background-position: 50% 40%;
   }
 
   .panes {
     padding: 20px;
   }
   .panes .pane {
-    padding: 10px 30px 20px 30px;
+    padding: 10px 20px 20px 20px;
   }
   .calls-to-action {
     display: block;
@@ -199,6 +307,18 @@ h2 em {
   .calls-to-action a + a {
     margin-top: 20px;
     margin-left: 0;
+  }
+
+  .idea {
+    width: 50%;
+    padding-top: 50%;
+  }
+  .btn-add-idea {
+    top: 25px;
+    right: 20px;
+  }
+  .tile-overlay .title {
+    font-size: 16px;
   }
 }
 
@@ -217,41 +337,29 @@ h2 em {
   .btn-home {
     height: 90px;
     width: 90px;
-    background-size: 70px 70px;
+    background-size: 40px 40px;
+    background-position: 50% 40%;
   }
   .panes .pane {
     padding: 10px 30px;
   }
-}
+  .idea {
+    width: 33.333333%;
+    padding-top: 33.333333%;
+  }
 
-@media(min-width: 800px) {
-  .panes .pane {
-    width: 600px;
+  .btn-add-idea {
+    top: 25px;
+    right: 30px;
+  }
+
+  .tile-overlay .title {
+    font-size: 18px;
   }
 }
 
-.ideas {
-  list-style: none;
-  overflow: auto;
-  zoom: 1;
-}
-.idea {
-  display: block;
-  float:left;
-  width: 200px;
-  height: 200px;
-  margin: 20px;
-  border: 4px solid #636363;
-  background-color: #272822;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 8px;
-  color: #d0d0d0;
-}
-.idea:hover {
-  box-shadow: 0px 0px 10px yellow;
-}
-
-img.detail {
-  max-width: 100%;
+@media(min-width: 800px) {
+  .panes .pane:not(.large) {
+    width: 600px;
+  }
 }

@@ -37,8 +37,8 @@ const IdeasPage = React.createClass({
 
   render() {
     return (
-      <div className="pane">
-        <a href='/nieuw-idee'>Voeg jouw idee toe</a>
+      <div className="pane large">
+        <a href='/nieuw-idee' className="btn-add-idea"><span>Voeg jouw idee toe</span></a>
         <IdeasList {...this.data} />
       </div>
     );
@@ -68,9 +68,19 @@ const IdeasListItem = React.createClass({
     FlowRouter.go('/ideeen/' + this.props.idea._id);
   },
   render() {
+    let imgUrl = this.props.idea.attachments[0] ? this.props.idea.attachments[0] : '/lamp.png';
+    var ideaStyle = {
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
+
     return (
       <li className='idea' onClick={this.onClick}>
-        <div className="title">{this.props.idea.title}</div>
+        <div className="idea-item" style={ ideaStyle }>
+          <div className="tile-overlay">
+            <h3 className="title">{this.props.idea.title} &rsaquo;</h3>
+            <p className="description">{this.props.idea.description}</p>
+          </div>
+        </div>
       </li>
     )
   }
