@@ -5,7 +5,8 @@ import {Layout} from './imports/layout.jsx';
 FlowRouter.route("/", {
   action() {
     mount(Layout, {
-      content: (<Homepage />)
+      content: (<Homepage />),
+      homeBtn: null
     });
   }
 });

@@ -53,25 +53,24 @@ header {
   justify-content: center;
   flex: 0 auto;
 }
-.link-ideas {
+.btn-home {
   display: block;
   position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 65px 0 0 0;
-  height: 90px;
-  width:90px;
-  color: white;
-  text-decoration: none;
-  background: rgba(252,152,43,0.9) url(/ideas.svg) 50% 5px no-repeat;
-  background-size: 60px 60px;
+  top: 0;
+  left: 0;
+  height: 150px;
+  width: 130px;
+  background: rgba(255,255,255,0.1) url(/home.svg) 50% 30% no-repeat;
+  background-size: 90px 90px;
   transition: all 0.2s ease;
   text-align: center;
-}
-.link-ideas:hover {
-  background-color: rgba(100,180,240,0.9);
-  color: white;
+  text-indent: 200%;
+  overflow: hidden;
   text-decoration: none;
+}
+.btn-home:hover {
+  background-color: rgba(255,255,255,0.25);
+  transform: scale(1.1);
 }
 
 header .col {
@@ -175,16 +174,10 @@ h2 em {
     font-size: 22px;
   }
 
-  .link-ideas {
-    top: 0;
-    left: 0;
-    text-indent: 9999px;
-    overflow: hidden;
-    width: 70px;
-    padding: 0;
+  .btn-home {
     height: 70px;
-    background-position: 50% 45%;
-    background-size: 40px 40px;
+    width: 70px;
+    background-size: 50px 50px;
   }
 
   .panes {
@@ -221,16 +214,10 @@ h2 em {
   header .col {
     justify-content: flex-start;
   }
-  .link-ideas {
-    top: 0;
-    left: 0;
-    padding: 50px 0 0 0;
-    height: 80px;
-    width: 80px;
-    background-position: 50% 10px;
-    background-size: 40px 40px;
-    font-size: 14px;
-    text-align: center;
+  .btn-home {
+    height: 90px;
+    width: 90px;
+    background-size: 70px 70px;
   }
   .panes .pane {
     padding: 10px 30px;

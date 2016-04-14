@@ -6,7 +6,8 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route('/ideeen/:idea', {
   action(params) {
     mount(Layout, {
-      content: (<IdeaPage {...params} />)
+      content: (<IdeaPage {...params} />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
 });
