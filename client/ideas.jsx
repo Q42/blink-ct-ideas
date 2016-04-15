@@ -6,7 +6,8 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route('/ideeen', {
   action(params, queryParams) {
     mount(Layout, {
-      content: (<IdeasPage page={queryParams.page} />)
+      content: (<IdeasPage page={queryParams.page} />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
 });
@@ -37,7 +38,7 @@ const IdeasPage = React.createClass({
   render() {
     return (
       <div className="pane">
-        <a href='/nieuw-idee'>Voeg jouw idee toe</a>
+        <a href='/nieuw-idee' className="btn-add-idea"><span>Voeg jouw idee toe</span></a>
         <IdeasList {...this.data} />
       </div>
     );
@@ -67,9 +68,19 @@ const IdeasListItem = React.createClass({
     FlowRouter.go('/ideeen/' + this.props.idea._id);
   },
   render() {
+    let imgUrl = this.props.idea.attachments ? this.props.idea.attachments[0] : '/lamp.png';
+    var ideaStyle = {
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
+
     return (
       <li className='idea' onClick={this.onClick}>
-        <div className="title">{this.props.idea.title}</div>
+        <div className="idea-item" style={ ideaStyle }>
+          <div className="tile-overlay">
+            <h3 className="title">{this.props.idea.title} &rsaquo;</h3>
+            <p className="description">{this.props.idea.description}</p>
+          </div>
+        </div>
       </li>
     )
   }

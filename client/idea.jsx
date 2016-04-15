@@ -6,7 +6,8 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route('/ideeen/:idea', {
   action(params) {
     mount(Layout, {
-      content: (<IdeaPage {...params} />)
+      content: (<IdeaPage {...params} />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
 });
@@ -29,17 +30,22 @@ const IdeaPage = React.createClass({
     let attachments = <br />
     if (this.data.idea.attachments) {
       attachments = this.data.idea.attachments.map((att) => {
-        return (<p>
+        return (<figure>
           <img src={att} className="detail" />
-        </p>);
+        </figure>);
       });
+      if(this.data.idea.attachments.length > 0) {
+        attachments = <div className="figures">{attachments}</div>;
+      }
     }
+
 
     return (
       <div className="pane">
+        <a href="/ideeen" className="back-btn">&lsaquo; Terug naar overzicht</a>
         <h2>{this.data.idea.title}</h2>
-        <h3>door {this.data.idea.authors}</h3>
-        {this.data.idea.description}
+        <h3 className="idea-authors">door {this.data.idea.authors}</h3>
+        <p>{this.data.idea.description}</p>
         {attachments}
         <Reactions idea={this.data.idea._id} reactions={this.data.idea.reactions} />
       </div>
@@ -50,9 +56,10 @@ const IdeaPage = React.createClass({
 const Reactions = React.createClass({
   render() {
     reactionsHtml = (this.props.reactions || []).map((reaction) => {
-      return (<p>
-        <bold>{reaction.author}</bold>: {reaction.message}
-      </p>);
+      return (<blockquote>
+        <p>{reaction.message}</p>
+        <cite>{reaction.author}</cite>
+      </blockquote>);
     });
 
     return (
@@ -92,7 +99,7 @@ const AddReaction = React.createClass({
     if (!this.state.userId) {
       return (
         <p>
-          Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren</a>!
+          Werk je bij Q42? <a href="#" onClick={this.login}>Log dan in om te reageren &rsaquo;</a>
         </p>
       );
     } else {

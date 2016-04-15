@@ -6,7 +6,8 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route("/nieuw-idee", {
   action() {
     mount(Layout, {
-      content: (<NewIdea />)
+      content: (<NewIdea />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
 });
@@ -77,7 +78,7 @@ const NewIdea = React.createClass({
       submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />
 
     return (
-      <div className="pane">
+      <div className="pane small">
         <h2>Tof dat je een idee hebt!</h2>
         <form onSubmit={this.submitForm}>
           <label>
