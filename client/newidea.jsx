@@ -72,7 +72,7 @@ const NewIdea = React.createClass({
       submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />
 
     return (
-      <div className="pane">
+      <div className="pane small">
         <h2>Tof dat je een idee hebt!</h2>
         <form onSubmit={this.submitForm}>
           <label>

@@ -104,6 +104,7 @@ h2 em {
   font-style: normal;
 }
 
+/* ======== LAYOUT */
 .panes {
   height: 100%;
   width: 100%;
@@ -125,6 +126,7 @@ h2 em {
   overflow-y: auto;
 }
 
+/* ======== HOMEPAGE */
 .calls-to-action {
   display: flex;
   flex-direction: row;
@@ -157,6 +159,8 @@ h2 em {
   background-color: rgba(252,152,43,1);
 }
 
+
+/* ======== IDEAS */
 .ideas {
   list-style: none;
   margin: 0;
@@ -265,6 +269,42 @@ img.detail {
   transform: translateY(0px);
 }
 
+/* ======== IDEA */
+h2 + .idea-authors {
+  margin-top: -5px;
+  font-weight: normal;
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+.figures {
+  margin: 20px -60px;
+  padding: 20px 60px;
+  background-color: rgba(0,0,0,0.8);
+}
+.figures img {
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.figures figure + figure {
+  margin-top: 20px;
+}
+blockquote {
+  border-left-color: rgba(0,0,0,0.2);
+}
+
+/* ======== TOASTR */
+#toast-container {
+  position: absolute;
+}
+#toast-container .toast {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+/* ======== RESPONSIVE BEHAVIOUR */
+
 @media(max-width: 500px) {
   header {
     height: 70px;
@@ -293,6 +333,10 @@ img.detail {
   }
   .panes .pane {
     padding: 10px 20px 20px 20px;
+  }
+  .figures {
+    margin: 20px -20px;
+    padding: 20px 20px;
   }
   .calls-to-action {
     display: block;
@@ -347,6 +391,10 @@ img.detail {
     width: 33.333333%;
     padding-top: 33.333333%;
   }
+  .figures {
+    margin: 20px -30px;
+    padding: 20px 30px;
+  }
 
   .btn-add-idea {
     top: 25px;
@@ -359,7 +407,7 @@ img.detail {
 }
 
 @media(min-width: 800px) {
-  .panes .pane:not(.large) {
+  .panes .pane.small {
     width: 600px;
   }
 }
