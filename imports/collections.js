@@ -12,6 +12,24 @@ Ideas.allow({
   }
 })
 
+// resize images
+Ideas.after.insert((userId, doc) => {
+  (doc.attachments || []).forEach((attachment) => {
+    if (attachment.indexOf('https://blink-ct-ideas.storage.googleapis.com/') == 0) {
+      const blobId = attachment.substr('https://blink-ct-ideas.storage.googleapis.com/'.length);
+      HTTP.post('https://blink-ct-3000.appspot.com/serveurl', {
+        bucket: 'blink-ct-3000',
+        image: blobId
+      }, (err, res) => {
+        if (err) console.error(err);
+        console.log('Done resizing image', attachment, blobId, res);
+      })
+    } else {
+      console.warn('Got an attachment not in googleapis', attachment);
+    }
+  });
+});
+
 var reactionSchema = new SimpleSchema({
   author: {
     label: 'Q42\'er',
