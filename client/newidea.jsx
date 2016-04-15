@@ -32,6 +32,7 @@ const NewIdea = React.createClass({
       if (err) {
         console.error(err);
         toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
+        this.afterFailedSubmit(_id);
       } else {
         const files = $('#file').get(0).files;
         let filesToUpload = files.length;
@@ -43,6 +44,7 @@ const NewIdea = React.createClass({
               if (error) {
                 console.error(error);
                 toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
+                this.afterFailedSubmit(_id);
               }
               else {
                 Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
@@ -61,7 +63,11 @@ const NewIdea = React.createClass({
     });
   },
   afterSuccessfulSubmit(_id) {
+    this.setState({uploading:false});
     FlowRouter.go('/ideeen/' + _id);
+  },
+  afterFailedSubmit(_id) {
+    this.setState({uploading:false});
   },
   render() {
     let submitButton;
