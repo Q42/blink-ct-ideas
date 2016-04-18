@@ -1,7 +1,8 @@
 import { Ideas } from '/imports/collections';
 
 const ITEMS_PER_PAGE = 10;
-const OVERVIEW_FIELDS = {authors: 1, title: 1, description: 1, attachments: 1};
+const OVERVIEW_FIELDS = {authors: 1, title: 1, description: 1, images: 1, updatedDate: 1};
+const DETAIL_FIELDS = {authors: 1, title: 1, description: 1, images: 1, updatedDate: 1, reactions: 1};
 
 Meteor.publish('ideas.paged', (page: number = 1):object => {
   page = Math.max(page, 1);
@@ -23,5 +24,5 @@ Meteor.publish('ideas.all', () => {
 });
 
 Meteor.publish('idea', (id: string):object => {
-  return Ideas.find({_id:id}, {fields: {email: -1}});
+  return Ideas.find({_id:id}, {fields: DETAIL_FIELDS});
 });

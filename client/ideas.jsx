@@ -68,7 +68,7 @@ const IdeasListItem = React.createClass({
     FlowRouter.go('/ideeen/' + this.props.idea._id);
   },
   render() {
-    let imgUrl = this.props.idea.attachments ? this.props.idea.attachments[0] : '/lamp.png';
+    let imgUrl = this.props.idea.images ? this.props.idea.images[0] + '=s210' : '/lamp.png';
     var ideaStyle = {
       backgroundImage: 'url(' + imgUrl + ')'
     };

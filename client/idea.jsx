@@ -28,13 +28,14 @@ const IdeaPage = React.createClass({
     )
 
     let attachments = <br />
-    if (this.data.idea.attachments) {
-      attachments = this.data.idea.attachments.map((att) => {
+    if (this.data.idea.images) {
+      attachments = this.data.idea.images.map((att) => {
+        const src = att + '=s700'
         return (<figure>
-          <img src={att} className="detail" />
+          <img src={src} className="detail" />
         </figure>);
       });
-      if(this.data.idea.attachments.length > 0) {
+      if(this.data.idea.images.length > 0) {
         attachments = <div className="figures">{attachments}</div>;
       }
     }
@@ -45,7 +46,7 @@ const IdeaPage = React.createClass({
         <a href="/ideeen" className="back-btn">&lsaquo; Terug naar overzicht</a>
         <h2>{this.data.idea.title}</h2>
         <h3 className="idea-authors">door {this.data.idea.authors}</h3>
-        <p>{this.data.idea.description}</p>
+        <p className="pre">{this.data.idea.description}</p>
         {attachments}
         <Reactions idea={this.data.idea._id} reactions={this.data.idea.reactions} />
       </div>
@@ -57,7 +58,7 @@ const Reactions = React.createClass({
   render() {
     reactionsHtml = (this.props.reactions || []).map((reaction) => {
       return (<blockquote>
-        <p>{reaction.message}</p>
+        <p className="pre">{reaction.message}</p>
         <cite>{reaction.author}</cite>
       </blockquote>);
     });

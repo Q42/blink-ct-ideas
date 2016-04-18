@@ -430,3 +430,7 @@ blockquote {
     width: 600px;
   }
 }
+
+.pre {
+  white-space: pre;
+}

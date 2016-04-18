@@ -1,35 +1,5 @@
 export const Ideas = new Mongo.Collection('ideas');
 
-Ideas.allow({
-  insert(userId, doc) {
-    return true;
-  },
-  update(userId, doc, fields, modifier) {
-    if (userId) {
-      return fields.length == 2 && fields[0] == "reactions" || fields[1] == "reactions" && modifier.$push;
-    }
-    return fields.length == 2 && fields[0] == "attachments" || fields[1] == "attachments" && modifier.$push;
-  }
-})
-
-// resize images
-Ideas.after.insert((userId, doc) => {
-  (doc.attachments || []).forEach((attachment) => {
-    if (attachment.indexOf('https://blink-ct-ideas.storage.googleapis.com/') == 0) {
-      const blobId = attachment.substr('https://blink-ct-ideas.storage.googleapis.com/'.length);
-      HTTP.post('https://blink-ct-3000.appspot.com/serveurl', {
-        bucket: 'blink-ct-3000',
-        image: blobId
-      }, (err, res) => {
-        if (err) console.error(err);
-        console.log('Done resizing image', attachment, blobId, res);
-      })
-    } else {
-      console.warn('Got an attachment not in googleapis', attachment);
-    }
-  });
-});
-
 var reactionSchema = new SimpleSchema({
   author: {
     label: 'Q42\'er',
@@ -82,16 +52,20 @@ Ideas.attachSchema({
     denyUpdate: true,
   },
   attachments: {
+    label: 'Bijlagen',
+    type: [String],
+    optional: true
+  },
+  images: {
     label: 'Afbeeldingen',
     type: [String],
-    optional: true,
-    denyUpdate: true,
+    optional: true
   },
   reactions: {
     label: 'Reacties',
     optional: true,
     // denyInsert: true, // needed for bootstrap script
-    blackbox: true,
+    // blackbox: true,
     type: [reactionSchema]
   }
 });
