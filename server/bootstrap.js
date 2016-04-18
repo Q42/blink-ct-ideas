@@ -13,6 +13,10 @@ Meteor.startup(() => {
           'https://blink-ct-ideas.storage.googleapis.com/89a90031-2ad8-4013-8d59-146acad8a67f',
           'https://blink-ct-ideas.storage.googleapis.com/b0fd1bce-ee8c-4322-8e29-e1187ca1251a'
         ],
+        images: [
+          'https://blink-ct-ideas.storage.googleapis.com/89a90031-2ad8-4013-8d59-146acad8a67f',
+          'https://blink-ct-ideas.storage.googleapis.com/b0fd1bce-ee8c-4322-8e29-e1187ca1251a'
+        ],
         reactions: [
           {author: 'lukas@q42.nl', message: 'Super gaaf! Mijn handen jeuken om er mee aan de slag te gaan :)\n\nJe zou zelfs nog een duikboot kunnen gebruiken.'}
         ]
