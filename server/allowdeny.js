@@ -1,13 +1,18 @@
 import { Ideas } from '/imports/collections';
+import { _ } from 'meteor/underscore';
+
+const ALLOWED_FIELDS = ['attachments', 'images', 'updatedDate'];
 
 Ideas.allow({
   insert(userId, doc) {
     return true;
   },
   update(userId, doc, fields, modifier) {
+    var allowed_fields = ALLOWED_FIELDS;
     if (userId) {
-      return fields.length == 2 && fields[0] == "reactions" || fields[1] == "reactions" && modifier.$push;
+      allowed_fields.push('reactions');
     }
-    return fields.length == 2 && fields[0] == "attachments" || fields[1] == "attachments" && modifier.$push;
+    return modifier['$push'] &&
+      _.without.apply(_, [fields].concat(allowed_fields)).length == 0;
   }
 })

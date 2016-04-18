@@ -54,12 +54,14 @@ Ideas.attachSchema({
   attachments: {
     label: 'Bijlagen',
     type: [String],
-    optional: true
+    optional: true,
+    denyInsert: true
   },
   images: {
     label: 'Afbeeldingen',
     type: [String],
-    optional: true
+    optional: true,
+    denyInsert: true
   },
   reactions: {
     label: 'Reacties',

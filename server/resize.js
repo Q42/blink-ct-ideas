@@ -2,8 +2,6 @@ import { Ideas } from '/imports/collections';
 import { HTTP } from 'meteor/http';
 
 Ideas.after.update((userId, doc, fieldNames, modifier, options) => {
-  console.log(modifier, fieldNames);
-
   const attachment = modifier['$push'] && modifier['$push'].attachments;
   if (!attachment) return;
 
@@ -17,9 +15,10 @@ Ideas.after.update((userId, doc, fieldNames, modifier, options) => {
       }
     }, (err, res) => {
       if (err) console.error(err);
-      console.log('Done resizing image', attachment, blobId, res);
       if (res.content.indexOf('http://') == 0 && res.content.indexOf('googleusercontent.com/') >= 0) {
         Ideas.update({_id:doc._id}, {$push:{images: res.content}});
+      } else {
+        console.error('Something error happens during image upload', res);
       }
     })
   } else {
