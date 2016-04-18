@@ -14,5 +14,11 @@ Ideas.allow({
     }
     return modifier['$push'] &&
       _.without.apply(_, [fields].concat(allowed_fields)).length == 0;
+  },
+  remove(userId, doc) {
+    if (userId) 
+      return true;
+    else
+      return false;
   }
 })
