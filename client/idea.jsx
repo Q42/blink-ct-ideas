@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from 'react-mounter';
 import {Layout} from './imports/layout.jsx';
 import {Ideas} from '/imports/collections';
+import {Commons} from '/helpers';
 
 FlowRouter.route('/ideeen/:idea', {
   action(params) {
@@ -29,9 +30,9 @@ const IdeaPage = React.createClass({
 
     let attachments = <br />
     if (this.data.idea.images) {
-      attachments = this.data.idea.images.map((att) => {
+      attachments = this.data.idea.images.map((att, id) => {
         const src = att + '=s700'
-        return (<figure>
+        return (<figure key={ id }>
           <img src={src} className="detail" />
         </figure>);
       });
@@ -56,9 +57,9 @@ const IdeaPage = React.createClass({
 
 const Reactions = React.createClass({
   render() {
-    reactionsHtml = (this.props.reactions || []).map((reaction) => {
-      return (<blockquote>
-        <p className="pre">{reaction.message}</p>
+    reactionsHtml = (this.props.reactions || []).map((reaction, id) => {
+      return (<blockquote key={ id }>
+        <p className="pre" dangerouslySetInnerHTML={{ __html: Commons.nl2br(reaction.message) }} />
         <cite>{reaction.author}</cite>
       </blockquote>);
     });
@@ -89,7 +90,13 @@ const AddReaction = React.createClass({
   submitForm(e) {
     e.preventDefault();
     console.log('storing', this.state);
-    Meteor.call('idea.reactions.push', this.props.idea, this.state.description);
+    Meteor.call('idea.reactions.push', this.props.idea, this.state.description, (error, respons) => {
+      if(!error) {
+        this.setState({
+          description: ''
+        });
+      }
+    });
   },
 
   changeDescription(e) {
