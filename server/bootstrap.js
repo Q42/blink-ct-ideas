@@ -20,6 +20,8 @@ Meteor.startup(() => {
         reactions: [
           {author: 'lukas@q42.nl', message: 'Super gaaf! Mijn handen jeuken om er mee aan de slag te gaan :)\n\nJe zou zelfs nog een duikboot kunnen gebruiken.'}
         ]
+      }, {
+        validate: false
       });
     });
   }

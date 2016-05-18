@@ -66,7 +66,7 @@ Ideas.attachSchema({
   reactions: {
     label: 'Reacties',
     optional: true,
-    // denyInsert: true, // needed for bootstrap script
+    denyInsert: true,
     // blackbox: true,
     type: [reactionSchema]
   }
