@@ -19,23 +19,44 @@ Slingshot.fileRestrictions("myFileUploads", {
 
 const NewIdea = React.createClass({
   getInitialState() {
-    return { uploading: false };
+    return {
+      uploading: false,
+      files: []
+    };
   },
   changeInput(e) {
+    const target = e.target;
     let changedObj = {};
-    changedObj[e.target.name] = e.target.value;
+    changedObj[target.name] = target.value;
     this.setState(changedObj);
+  },
+  updateFiles(e) {
+    const target = e.target;
+    let files = this.state.files;
+    files[target.getAttribute('id')] = target.files;
+    this.setState({
+      files: files
+    });
+  },
+  getAllFiles() {
+    return this.state.files.reduce((list, files) => {
+      return list.concat(Array.prototype.slice.call(files));
+    }, []);
   },
   submitForm(e) {
     e.preventDefault();
     this.setState({uploading:true});
+    const filesState = this.state.files;
     Ideas.insert(this.state, (err, _id) => {
+      this.setState({
+        files: filesState
+      });
       if (err) {
         console.error(err);
         toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
         this.afterFailedSubmit(_id);
       } else {
-        const files = $('#file').get(0).files;
+        const files = this.getAllFiles();
         let filesToUpload = files.length;
         if (files.length) {
           const uploaders = _.map(files, (file) => {
@@ -99,11 +120,27 @@ const NewIdea = React.createClass({
           </label>
           <label>
             En je kan er ook nog foto's bij doen als je wilt:
-            <input id="file" type="file" multiple="true" />
+            {this.renderFileInput()}
           </label>
           {submitButton}
         </form>
       </div>
     )
+  },
+  renderFileInput() {
+    let fileInputs = this.state.files.map((files, id) => {
+      return <input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />;
+    });
+
+    const allInputsHaveValues = this.state.files.reduce((current, files) => {
+      return current && files
+    }, true);
+
+    if(allInputsHaveValues) {
+      const id = this.state.files.length;
+      fileInputs.push(<input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />);
+    }
+
+    return fileInputs;
   }
 });
