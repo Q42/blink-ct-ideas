@@ -39,6 +39,10 @@ const NewIdea = React.createClass({
     });
   },
   getAllFiles() {
+    if(!this.state.files) {
+      return [];
+    }
+
     return this.state.files.reduce((list, files) => {
       return list.concat(Array.prototype.slice.call(files));
     }, []);
@@ -128,11 +132,14 @@ const NewIdea = React.createClass({
     )
   },
   renderFileInput() {
-    let fileInputs = this.state.files.map((files, id) => {
-      return <input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />;
-    });
+    let fileInputs;
+    if(this.state.files) {
+      fileInputs = this.state.files.map((files, id) => {
+        return <input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />;
+      });
+    }
 
-    const allInputsHaveValues = this.state.files.reduce((current, files) => {
+    const allInputsHaveValues = (this.state.files || []).reduce((current, files) => {
       return current && files
     }, true);
 
