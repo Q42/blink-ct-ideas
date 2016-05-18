@@ -4,8 +4,8 @@
   "description": "Verzamelplaats voor ideeën van het Junior Computer Lab",
   "main": "blink-ct-feedback.js",
   "dependencies": {
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
     "react-mounter": "^1.1.0"
   },
   "devDependencies": {},
