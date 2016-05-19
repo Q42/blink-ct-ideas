@@ -1,7 +1,7 @@
 import { Ideas } from '/imports/collections.js';
 
 Meteor.startup(() => {
-  if (!Ideas.findOne()) {
+  if (Meteor.isDevelopment && !Ideas.findOne()) {
     console.log('Empty DB! I\'ll fill it with some stuff...');
     _.range(1,22).forEach((i) => {
       Ideas.insert({
