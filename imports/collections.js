@@ -29,6 +29,12 @@ Ideas.attachSchema({
       return new Date;
     }
   },
+  school: {
+    label: 'School',
+    type: String,
+    optional: true,
+    denyUpdate: true,
+  },
   authors: {
     label: 'Auteur(s)',
     type: String,
@@ -54,8 +60,7 @@ Ideas.attachSchema({
   attachments: {
     label: 'Bijlagen',
     type: [String],
-    optional: true,
-    denyInsert: true
+    optional: true
   },
   images: {
     label: 'Afbeeldingen',
