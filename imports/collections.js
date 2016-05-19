@@ -3,11 +3,11 @@ export const Ideas = new Mongo.Collection('ideas');
 var reactionSchema = new SimpleSchema({
   author: {
     label: 'Q42\'er',
-    type:String
+    type: String
   },
   message: {
     label: 'Feedback',
-    type:String
+    type: String
   }
 });
 
@@ -17,7 +17,7 @@ Ideas.attachSchema({
     type: Date,
     denyUpdate: true,
     autoValue() {
-      if ( this.isInsert ) {
+      if( this.isInsert ) {
         return new Date;
       }
     }
@@ -48,7 +48,7 @@ Ideas.attachSchema({
   },
   title: {
     label: 'Idee',
-    type:String,
+    type: String,
     denyUpdate: true,
   },
   description: {
