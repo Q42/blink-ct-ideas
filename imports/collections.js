@@ -60,7 +60,8 @@ Ideas.attachSchema({
   attachments: {
     label: 'Bijlagen',
     type: [String],
-    optional: true
+    optional: true,
+    denyUpdate: true
   },
   images: {
     label: 'Afbeeldingen',

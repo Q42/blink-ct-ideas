@@ -19,6 +19,7 @@ Slingshot.fileRestrictions("myFileUploads", {
 
 const NewIdea = React.createClass({
   getInitialState() {
+    this.uploadComputations = {};
     return {
       uploading: false,
       files: []
@@ -47,71 +48,121 @@ const NewIdea = React.createClass({
       return list.concat(Array.prototype.slice.call(files));
     }, []);
   },
+  handleUpload() {
+    return new Promise((resolve, reject) => {
+      const files = this.getAllFiles();
+      let filesToUpload = files.length;
+
+      let attachments = [];
+
+      if(!files.length) {
+        return resolve(attachments);
+      }
+
+      this.setState({
+        nrOfUploads: filesToUpload,
+        uploadProgress: []
+      });
+
+      files.forEach((file, i) => {
+        this.setState(currentState => {
+          currentState.uploadProgress[i] = 0;
+          return currentState;
+        });
+
+        let uploader = new Slingshot.Upload("myFileUploads");
+        uploader.send(file, (error, downloadUrl) => {
+          this.setState(currentState => {
+            currentState.uploadProgress[i] = 100;
+            return currentState;
+          });
+          filesToUpload--;
+          this.uploadComputations[i].stop();
+          if(error) {
+            console.error(error);
+            toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
+            return reject(uploader.xhr.response);
+          }
+
+          attachments.push(downloadUrl);
+
+          if(filesToUpload === 0) {
+            return resolve(attachments);
+          }
+        });
+
+        this.uploadComputations[i] = Tracker.autorun(() => {
+          const progress = uploader.progress();
+          if(progress) {
+            this.setState(currentState => {
+              currentState.uploadProgress[i] += progress;
+              return currentState;
+            });
+          }
+        });
+      });
+    });
+  },
   submitForm(e) {
     e.preventDefault();
-    this.setState({uploading:true});
-    const filesState = this.state.files;
-    Ideas.insert(this.state, (err, _id) => {
-      this.setState({
-        files: filesState
-      });
-      if (err) {
-        console.error(err);
-        toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
-        this.afterFailedSubmit(_id);
-      } else {
-        const files = this.getAllFiles();
-        let filesToUpload = files.length;
-        if (files.length) {
-          const uploaders = _.map(files, (file) => {
-            var uploader = new Slingshot.Upload("myFileUploads");
-            uploader.send(file, (error, downloadUrl) => {
-              filesToUpload--;
-              if (error) {
-                console.error(error);
-                toastr.error('Je afbeelding is niet opgeslagen: ' + (uploader.xhr.response), 'Uh-oh');
-                this.afterFailedSubmit(_id);
-              }
-              else {
-                Ideas.update({_id: _id}, {$push: {attachments: downloadUrl}});
-                if (filesToUpload == 0) {
-                  this.afterSuccessfulSubmit(_id);
-                }
-              }
-            });
-            return uploader;
-          });
+    this.setState({uploading: true});
 
+    this.handleUpload().then(attachments => {
+      Ideas.insert({
+        school: this.state.school,
+        authors: this.state.authors,
+        emails: this.state.emails,
+        title: this.state.title,
+        description: this.state.description,
+        attachments: attachments
+      }, (err, _id) => {
+        if(err) {
+          console.error(err);
+          toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
+          this.afterFailedSubmit();
         } else {
+          let successMessage = 'Het idee is toegevoegd! ';
+          if(this.state.emails) {
+            successMessage += `Jullie krijgen een e-mailbericht op ${ this.state.emails } wanneer er een reactie is.`;
+          } else {
+            successMessage += 'Bezoek deze pagina regelmatig om nieuwe reacties te zien!';
+          }
+          toastr.success(successMessage, 'Gelukt!', { timeOut: 10000 });
           this.afterSuccessfulSubmit(_id);
         }
-      }
+      });
+    }).catch(() => {
+      this.afterFailedSubmit();
     });
   },
   afterSuccessfulSubmit(_id) {
-    this.setState({uploading:false});
     FlowRouter.go('/ideeen/' + _id);
   },
-  afterFailedSubmit(_id) {
-    this.setState({uploading:false});
+  afterFailedSubmit() {
+    this.setState({uploading: false});
   },
   render() {
     let submitButton;
-    if (this.state.uploading)
-      submitButton = <input className="cta" type="submit" value="Bezig met versturen..." disabled="disabled" />
-    else
-      submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />
+    if(this.state.uploading) {
+      submitButton = <input className="cta" type="submit" value="Bezig met versturen..." disabled="disabled" />;
+    } else {
+      submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />;
+    }
 
     return (
       <div className="pane small">
         <h2>Tof dat je een idee hebt!</h2>
         <form onSubmit={this.submitForm}>
           <label>
+            Op welke school zitten jullie? (niet verplicht)
+            <input name="school" type="text" onChange={this.changeInput} value={this.state.school} />
+          </label>
+          <label>
             Wat zijn jullie namen?
             <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
-            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in
+            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42&#39;er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in
             <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>
@@ -123,16 +174,17 @@ const NewIdea = React.createClass({
             <textarea name="description" onChange={this.changeInput}>{this.state.description}</textarea>
           </label>
           <label>
-            En je kan er ook nog foto's bij doen als je wilt:
+            En je kan er ook nog foto&#39;s bij doen als je wilt:
             {this.renderFileInput()}
           </label>
+          {this.renderProgressBar()}
           {submitButton}
         </form>
       </div>
-    )
+    );
   },
   renderFileInput() {
-    let fileInputs;
+    let fileInputs = [];
     if(this.state.files) {
       fileInputs = this.state.files.map((files, id) => {
         return <input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />;
@@ -140,14 +192,32 @@ const NewIdea = React.createClass({
     }
 
     const allInputsHaveValues = (this.state.files || []).reduce((current, files) => {
-      return current && files
+      return current && files;
     }, true);
 
     if(allInputsHaveValues) {
-      const id = this.state.files.length;
+      const id = this.state.files ? this.state.files.length : -1;
       fileInputs.push(<input id={ id } type="file" multiple="true" key={ id } onChange={ this.updateFiles } />);
     }
 
     return fileInputs;
+  },
+  renderProgressBar() {
+    if(!this.state.uploading || !this.state.uploadProgress) {
+      return null;
+    }
+
+    const progress = this.state.uploadProgress.reduce((total, current) => {
+      return total + current;
+    }, 0);
+
+    const percentage = progress / this.state.nrOfUploads;
+    return (
+      <div className="progress">
+        <div className="progress-bar" role="progressbar" aria-valuenow="{ percentage }" aria-valuemin="0" aria-valuemax="100" style={{ width: percentage + '%' }}>
+          <span className="sr-only">{ percentage }% Complete</span>
+        </div>
+      </div>
+    );
   }
 });
