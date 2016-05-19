@@ -121,6 +121,12 @@ const NewIdea = React.createClass({
           toastr.error('Er is iets mis gegaan: ' + (err.reason || err), 'Uh-oh');
           this.afterFailedSubmit();
         } else {
+          let currentIdeas = Session.get('myIdeas') || [];
+          currentIdeas.push(_id);
+          Session.setPersistent({
+            myIdeas: currentIdeas
+          });
+
           let successMessage = 'Het idee is toegevoegd! ';
           if(this.state.emails) {
             successMessage += `Jullie krijgen een e-mailbericht op ${ this.state.emails } wanneer er een reactie is.`;

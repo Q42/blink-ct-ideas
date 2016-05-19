@@ -54,12 +54,26 @@ const IdeasList = React.createClass({
         </div>
       )
     }
-    const ideasNodes = this.props.ideas.map((idea) => <IdeasListItem key={idea._id} idea={idea} />);
+
+    const myIdeas = Session.get('myIdeas') || [];
+
+    let myIdeasNodes = [];
+    let otherIdeasNodes = [];
+
+    this.props.ideas.forEach(idea => {
+      if(myIdeas.indexOf(idea._id) > -1) {
+        myIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
+      } else {
+        otherIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
+      }
+    });
+    const ideasNodes = myIdeasNodes.concat(otherIdeasNodes);
+
     return (
       <ul className='ideas'>
         {ideasNodes}
       </ul>
-    )
+    );
   }
 });
 

@@ -9,5 +9,10 @@
       "MONGO_OPLOG_URL": "",
       "MAIL_URL":""
     }
+  },
+  "public": {
+    "persistent_session": {
+      "default_method": "persistent"
+    }
   }
 }
