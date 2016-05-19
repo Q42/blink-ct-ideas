@@ -75,6 +75,10 @@ Ideas.attachSchema({
     denyInsert: true,
     // blackbox: true,
     type: [reactionSchema]
+  },
+  deletedBy: {
+    type: String,
+    optional: true
   }
 });
 

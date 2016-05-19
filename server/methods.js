@@ -1,13 +1,13 @@
 import { Ideas } from '/imports/collections';
-import { Commons } from '/helpers'
+import { Commons } from '/helpers';
 
 Meteor.methods({
   'idea.reactions.push'(ideaID, message) {
-    if(!this.userId) {
+    if(!Meteor.userId()) {
       return;
     }
 
-    const email = Meteor.users.findOne(this.userId).services.google.email;
+    const email = Meteor.users.findOne(Meteor.userId()).services.google.email;
     console.log('idea.reactions.push', ideaID, email, message);
     Ideas.update({_id: ideaID}, {
       $push: {
@@ -35,5 +35,16 @@ Meteor.methods({
         });
       }
     });
+  },
+  'idea.remove'(ideaID) {
+    if(!Meteor.userId()) {
+      return;
+    }
+
+    Ideas.update({_id: ideaID}, {
+      $set: {
+        deletedBy: Meteor.userId()
+      }
+    });
   }
-})
+});

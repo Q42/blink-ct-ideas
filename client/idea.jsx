@@ -48,14 +48,19 @@ const IdeaPage = React.createClass({
       author += ` (${ this.data.idea.school })`;
     }
 
+    let notOK;
+    if(this.data.idea.deletedBy) {
+      notOK = ' (NOT OK)';
+    }
+
     return (
       <div className="pane">
         <a href="/ideeen" className="back-btn">&lsaquo; Terug naar overzicht</a>
-        <h2>{this.data.idea.title}</h2>
+        <h2>{this.data.idea.title}{ notOK }</h2>
         <h3 className="idea-authors">door {author}</h3>
         <p className="pre">{this.data.idea.description}</p>
         {attachments}
-        <Reactions idea={this.data.idea._id} reactions={this.data.idea.reactions} />
+        <Reactions idea={this.data.idea} reactions={this.data.idea.reactions} />
       </div>
     );
   }
@@ -96,7 +101,7 @@ const AddReaction = React.createClass({
   submitForm(e) {
     e.preventDefault();
     console.log('storing', this.state);
-    Meteor.call('idea.reactions.push', this.props.idea, this.state.description, (error, respons) => {
+    Meteor.call('idea.reactions.push', this.props.idea._id, this.state.description, (error, respons) => {
       if(!error) {
         this.setState({
           description: ''
@@ -109,6 +114,11 @@ const AddReaction = React.createClass({
     this.setState({ description: e.target.value });
   },
 
+  removeIdea(e) {
+    e.preventDefault();
+    Meteor.call('idea.remove', this.props.idea._id);
+  },
+
   render() {
     if(!this.state.userId) {
       return (
@@ -118,6 +128,11 @@ const AddReaction = React.createClass({
       );
     }
 
+    let deleteButton;
+    if(!this.props.idea.deletedBy) {
+      deleteButton = <button className="no" onClick={ this.removeIdea }>Dit is NIET OK</button>;
+    }
+
     return (
       <form onSubmit={this.submitForm}>
         <label>
@@ -125,6 +140,7 @@ const AddReaction = React.createClass({
           <textarea name="description" onChange={this.changeDescription} value={this.state.description}></textarea>
         </label>
         <input className="cta" type="submit" value="Voeg deze reactie toe" />
+        { deleteButton }
       </form>
     );
   }

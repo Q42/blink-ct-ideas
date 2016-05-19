@@ -73,9 +73,14 @@ const IdeasListItem = React.createClass({
       backgroundImage: 'url(' + imgUrl + ')'
     };
 
+    let itemClasses = "idea-item";
+    if(this.props.idea.deletedBy) {
+      itemClasses += " idea-item-not-ok";
+    }
+
     return (
       <li className='idea' onClick={this.onClick}>
-        <div className="idea-item" style={ ideaStyle }>
+        <div className={ itemClasses } style={ ideaStyle }>
           <div className="tile-overlay">
             <h3 className="title">{this.props.idea.title} &rsaquo;</h3>
             <p className="description">{this.props.idea.description}</p>
