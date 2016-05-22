@@ -2,7 +2,7 @@ import { Ideas } from '/imports/collections';
 import { HTTP } from 'meteor/http';
 
 Ideas.after.insert((userId, doc) => {
-  const urlEmail = Meteor.settings['galaxy.meteor.com'].env.ROOT_URL + '/ideeen/' + doc._id;
+  const urlEmail = process.env.ROOT_URL + 'ideeen/' + doc._id;
   Email.send({
     from: 'no-reply@q42.nl',
     to: Meteor.settings.EmailNewIdea,
