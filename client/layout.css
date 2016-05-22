@@ -195,6 +195,10 @@ h2 em {
   color: #d0d0d0;
 }
 
+.idea-item-not-ok .tile-overlay {
+  background: rgba(207,38,29,0.6) !important;
+}
+
 img.detail {
   max-width: 100%;
 }

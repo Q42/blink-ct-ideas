@@ -1,12 +1,18 @@
 {
   "GoogleAccessId": "slingshot@blink-ct-3000.iam.gserviceaccount.com",
   "GoogleCloudBucket": "blink-ct-ideas",
+  "EmailNewIdea": "",
   "galaxy.meteor.com": {
     "env": {
       "ROOT_URL": "https://juniorcomputerlab.q42.nl",
       "MONGO_URL": "",
       "MONGO_OPLOG_URL": "",
       "MAIL_URL":""
+    }
+  },
+  "public": {
+    "persistent_session": {
+      "default_method": "persistent"
     }
   }
 }

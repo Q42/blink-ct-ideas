@@ -1,12 +1,12 @@
 import { Ideas } from '/imports/collections.js';
 
 Meteor.startup(() => {
-  if (!Ideas.findOne()) {
+  if (Meteor.isDevelopment && !Ideas.findOne()) {
     console.log('Empty DB! I\'ll fill it with some stuff...');
     _.range(1,22).forEach((i) => {
       Ideas.insert({
         authors: 'Piet, Henkie en Arie',
-        emails: 'piet@piet.nl, henkie@henkie.nl arie@arie.nl',
+        emails: 'lukas@3l.nl, lukas@q42.nl',
         title: 'Post versturen met een speedboot',
         description: 'Post versturen kost veel energie dus als we daar nou een speedboot voor gebruiken dan heb je niet zoveel asfalt nodig.\ngoed idee toch?\n\nEn voor lange afstanden een straaljagert.',
         attachments: [
@@ -20,6 +20,8 @@ Meteor.startup(() => {
         reactions: [
           {author: 'lukas@q42.nl', message: 'Super gaaf! Mijn handen jeuken om er mee aan de slag te gaan :)\n\nJe zou zelfs nog een duikboot kunnen gebruiken.'}
         ]
+      }, {
+        validate: false
       });
     });
   }

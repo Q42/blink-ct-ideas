@@ -22,6 +22,7 @@ form label textarea {
 
 .cta {
   display: block;
+  float:left;
   border-radius: 10px;
   padding: 10px 20px 10px 70px;
   background-size: 42px 42px !important;
@@ -40,10 +41,30 @@ form label textarea {
   border-color: rgba(252,152,43,0.5);
 }
 
+.no {
+  display: block;
+  float: right;
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
+  background-size: 42px 42px !important;
+  width: 100%;
+  max-width: 200px;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  transition: all 0.2s ease-out;
+  background: rgba(207,38,29,1);
+  border: 2px solid rgba(207,38,29,0.5);
+}
+
 @media(max-width: 500px) {
   .cta {
     background-image: none;
     padding-left:  20px;
     text-align: center;
+  }
+  .no {
+    background-image: none;
+    padding-left:  20px;
   }
 }

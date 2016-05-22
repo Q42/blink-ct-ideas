@@ -3,11 +3,11 @@ export const Ideas = new Mongo.Collection('ideas');
 var reactionSchema = new SimpleSchema({
   author: {
     label: 'Q42\'er',
-    type:String
+    type: String
   },
   message: {
     label: 'Feedback',
-    type:String
+    type: String
   }
 });
 
@@ -17,7 +17,7 @@ Ideas.attachSchema({
     type: Date,
     denyUpdate: true,
     autoValue() {
-      if ( this.isInsert ) {
+      if( this.isInsert ) {
         return new Date;
       }
     }
@@ -28,6 +28,12 @@ Ideas.attachSchema({
     autoValue() {
       return new Date;
     }
+  },
+  school: {
+    label: 'School',
+    type: String,
+    optional: true,
+    denyUpdate: true,
   },
   authors: {
     label: 'Auteur(s)',
@@ -42,7 +48,7 @@ Ideas.attachSchema({
   },
   title: {
     label: 'Idee',
-    type:String,
+    type: String,
     denyUpdate: true,
   },
   description: {
@@ -55,7 +61,7 @@ Ideas.attachSchema({
     label: 'Bijlagen',
     type: [String],
     optional: true,
-    denyInsert: true
+    denyUpdate: true
   },
   images: {
     label: 'Afbeeldingen',
@@ -66,9 +72,13 @@ Ideas.attachSchema({
   reactions: {
     label: 'Reacties',
     optional: true,
-    // denyInsert: true, // needed for bootstrap script
+    denyInsert: true,
     // blackbox: true,
     type: [reactionSchema]
+  },
+  deletedBy: {
+    type: String,
+    optional: true
   }
 });
 

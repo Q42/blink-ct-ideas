@@ -54,12 +54,26 @@ const IdeasList = React.createClass({
         </div>
       )
     }
-    const ideasNodes = this.props.ideas.map((idea) => <IdeasListItem key={idea._id} idea={idea} />);
+
+    const myIdeas = Session.get('myIdeas') || [];
+
+    let myIdeasNodes = [];
+    let otherIdeasNodes = [];
+
+    this.props.ideas.forEach(idea => {
+      if(myIdeas.indexOf(idea._id) > -1) {
+        myIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
+      } else {
+        otherIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
+      }
+    });
+    const ideasNodes = myIdeasNodes.concat(otherIdeasNodes);
+
     return (
       <ul className='ideas'>
         {ideasNodes}
       </ul>
-    )
+    );
   }
 });
 
@@ -73,9 +87,14 @@ const IdeasListItem = React.createClass({
       backgroundImage: 'url(' + imgUrl + ')'
     };
 
+    let itemClasses = "idea-item";
+    if(this.props.idea.deletedBy) {
+      itemClasses += " idea-item-not-ok";
+    }
+
     return (
       <li className='idea' onClick={this.onClick}>
-        <div className="idea-item" style={ ideaStyle }>
+        <div className={ itemClasses } style={ ideaStyle }>
           <div className="tile-overlay">
             <h3 className="title">{this.props.idea.title} &rsaquo;</h3>
             <p className="description">{this.props.idea.description}</p>
