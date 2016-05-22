@@ -2,12 +2,12 @@ import { Ideas } from '/imports/collections';
 import { HTTP } from 'meteor/http';
 
 Ideas.after.insert((userId, doc) => {
-  const urlEmail = process.env.ROOT_URL + 'ideeen/' + doc._id;
+  const urlEmail = process.env.ROOT_URL + '/ideeen/' + doc._id;
   Email.send({
     from: 'no-reply@q42.nl',
     to: Meteor.settings.EmailNewIdea,
     subject: 'Nieuw idee op juniorcomputerlab.q42.nl',
-    text: `${ doc.description }<br/><br/>door ${ doc.authors }<br/><br/><br/><a href="${ urlEmail }">${ urlEmail }</a>`
+    text: `${ doc.description }\n\n- ${ doc.authors }\n\n${ urlEmail }`
   });
 
   const attachments = doc.attachments;

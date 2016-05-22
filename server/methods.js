@@ -31,7 +31,7 @@ Meteor.methods({
           from: email,
           to: idea.emails,
           subject: 'Reactie van Q42',
-          text: `${ Commons.nl2br(message) }<br/><br/><i>${ email }</i>`
+          text: `${ message }\n\n- ${ email }`
         });
       }
     });
