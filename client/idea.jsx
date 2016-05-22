@@ -26,7 +26,7 @@ const IdeaPage = React.createClass({
   render() {
     if(!this.data.idea) {
       return (
-        <div className="pane">Loading...</div>
+        <div className="pane">Bezig met laden...</div>
       );
     }
 
