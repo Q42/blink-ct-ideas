@@ -1,6 +1,31 @@
 import { Ideas } from '/imports/collections';
 import { HTTP } from 'meteor/http';
 
+let _sendSlackMessage = (doc, url) => {
+  const message = {
+    attachments: [
+      {
+        title: doc.title,
+        'author_name': doc.authors,
+        'title_link': url,
+        'image_url': doc.attachments ? doc.attachments[0] : null,
+        pretext: 'Er is een nieuw idee gepost in de ideeënbus!',
+        text: doc.description
+      }
+    ]
+  };
+
+  HTTP.post(Meteor.settings.slack.url, {
+    params: {
+      payload: JSON.stringify(message)
+    }
+  }, (err, res) => {
+    if(err) {
+      console.log('slack post error', err);
+    }
+  });
+};
+
 Ideas.after.insert((userId, doc) => {
   const urlEmail = process.env.ROOT_URL + '/ideeen/' + doc._id;
   Email.send({
@@ -34,4 +59,6 @@ Ideas.after.insert((userId, doc) => {
       console.warn('Got an attachment not in googleapis', attachment);
     }
   });
+
+  _sendSlackMessage(doc, urlEmail);
 });

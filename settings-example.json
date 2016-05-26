@@ -2,6 +2,9 @@
   "GoogleAccessId": "slingshot@blink-ct-3000.iam.gserviceaccount.com",
   "GoogleCloudBucket": "blink-ct-ideas",
   "EmailNewIdea": "",
+  "slack" : {
+    "url": "https://hooks.slack.com/services/XXXXXXXXXXXXXX/YYYYYYYYYYYYYYYYY"
+  },
   "galaxy.meteor.com": {
     "env": {
       "ROOT_URL": "https://juniorcomputerlab.q42.nl",
