@@ -27,6 +27,7 @@ Meteor.methods({
       });
 
       if(idea && idea.emails) {
+        console.log('Reaction mailed from', email, 'to', idea.emails);
         Email.send({
           from: email,
           to: idea.emails,
