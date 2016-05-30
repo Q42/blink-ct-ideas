@@ -3,6 +3,7 @@ import { Ideas } from '/imports/collections';
 const ITEMS_PER_PAGE = 10;
 const OVERVIEW_FIELDS = {authors: 1, title: 1, description: 1, images: 1, updatedDate: 1, deletedBy: 1};
 const DETAIL_FIELDS = {school: 1, authors: 1, title: 1, description: 1, images: 1, updatedDate: 1, reactions: 1, deletedBy: 1};
+const DETAIL_FIELDS_LOGGEDIN = {school: 1, authors: 1, title: 1, description: 1, images: 1, updatedDate: 1, reactions: 1, deletedBy: 1, emails: 1};
 
 Meteor.publish('ideas.paged', function(page) {
   let query = {};
@@ -34,9 +35,10 @@ Meteor.publish('ideas.all', function() {
 
 Meteor.publish('idea', function(id) {
   let query = {_id: id};
+  let fields = this.userId ? DETAIL_FIELDS_LOGGEDIN : DETAIL_FIELDS;
   if(!this.userId) {
     query.deletedBy = null;
   }
 
-  return Ideas.find(query, {fields: DETAIL_FIELDS});
+  return Ideas.find(query, {fields: fields});
 });

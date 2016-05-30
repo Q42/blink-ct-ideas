@@ -47,10 +47,13 @@ const IdeaPage = React.createClass({
     if(this.data.idea.school) {
       author += ` (${ this.data.idea.school })`;
     }
+    if(this.data.idea.emails) {
+      author += ` - ${ this.data.idea.emails }`;
+    }
 
     let notOK;
     if(this.data.idea.deletedBy) {
-      notOK = ' (NOT OK)';
+      notOK = ` (DELETED)`;
     }
 
     return (
