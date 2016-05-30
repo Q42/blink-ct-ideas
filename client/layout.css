@@ -60,7 +60,7 @@ header {
   left: 0;
   height: 150px;
   width: 130px;
-  background: rgba(255,255,255,0.1) url(/home.svg) 50% 32% no-repeat;
+  background: rgba(255,255,255,0.1) url(/home.png) 50% 32% no-repeat;
   background-size: 60px 60px;
   transition: all 0.2s ease;
   text-align: center;
