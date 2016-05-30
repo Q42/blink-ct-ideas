@@ -71,7 +71,7 @@ const Reactions = React.createClass({
     reactionsHtml = (this.props.reactions || []).map((reaction, id) => {
       return (<blockquote key={ id }>
         <p className="pre" dangerouslySetInnerHTML={{ __html: Commons.nl2br(reaction.message) }} />
-        <cite>{reaction.author}</cite>
+        <cite>{reaction.author.substr(0,reaction.author.indexOf('@'))}</cite>
       </blockquote>);
     });
 
