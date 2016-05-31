@@ -198,6 +198,9 @@ h2 em {
 .idea-item-not-ok .tile-overlay {
   background: rgba(207,38,29,0.6) !important;
 }
+.idea-item-not-reacted .tile-overlay {
+  background: rgba(38,207,29,0.6) !important;
+}
 
 img.detail {
   max-width: 100%;

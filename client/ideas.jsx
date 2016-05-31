@@ -91,6 +91,9 @@ const IdeasListItem = React.createClass({
     if(this.props.idea.deletedBy) {
       itemClasses += " idea-item-not-ok";
     }
+    if(Meteor.userId() && (!this.props.idea.reactions || !this.props.idea.reactions.length)) {
+      itemClasses += " idea-item-not-reacted";
+    }
 
     return (
       <li className='idea' onClick={this.onClick}>
