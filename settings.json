@@ -1,4 +1,12 @@
 {
   "GoogleAccessId": "slingshot@blink-ct-3000.iam.gserviceaccount.com",
-  "GoogleCloudBucket": "blink-ct-ideas"
+  "GoogleCloudBucket": "blink-ct-ideas",
+  "slack" : {
+    "url": "https://hooks.slack.com/services/XXXXXXXXXXXXXX/YYYYYYYYYYYYYYYYY"
+  },
+  "public": {
+    "persistent_session": {
+      "default_method": "persistent"
+    }
+  }
 }
