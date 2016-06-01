@@ -60,7 +60,7 @@ header {
   left: 0;
   height: 150px;
   width: 130px;
-  background: rgba(255,255,255,0.1) url(/home.svg) 50% 32% no-repeat;
+  background: rgba(255,255,255,0.1) url(/home.png) 50% 32% no-repeat;
   background-size: 60px 60px;
   transition: all 0.2s ease;
   text-align: center;
@@ -197,6 +197,9 @@ h2 em {
 
 .idea-item-not-ok .tile-overlay {
   background: rgba(207,38,29,0.6) !important;
+}
+.idea-item-not-reacted .tile-overlay {
+  background: rgba(38,207,29,0.6) !important;
 }
 
 img.detail {

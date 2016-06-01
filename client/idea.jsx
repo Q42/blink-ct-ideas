@@ -47,10 +47,13 @@ const IdeaPage = React.createClass({
     if(this.data.idea.school) {
       author += ` (${ this.data.idea.school })`;
     }
+    if(this.data.idea.emails) {
+      author += ` - ${ this.data.idea.emails }`;
+    }
 
     let notOK;
     if(this.data.idea.deletedBy) {
-      notOK = ' (NOT OK)';
+      notOK = ` (DELETED)`;
     }
 
     return (
@@ -71,7 +74,7 @@ const Reactions = React.createClass({
     reactionsHtml = (this.props.reactions || []).map((reaction, id) => {
       return (<blockquote key={ id }>
         <p className="pre" dangerouslySetInnerHTML={{ __html: Commons.nl2br(reaction.message) }} />
-        <cite>{reaction.author}</cite>
+        <cite>{reaction.author.substr(0,reaction.author.indexOf('@'))}</cite>
       </blockquote>);
     });
 
