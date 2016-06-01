@@ -50,7 +50,7 @@ const IdeasList = React.createClass({
     if (!this.props.ideas.length) {
       return (
         <div>
-          Er zijn nog geen ideeen!
+          Bezig met laden...
         </div>
       )
     }
