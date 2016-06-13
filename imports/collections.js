@@ -79,6 +79,10 @@ Ideas.attachSchema({
   deletedBy: {
     type: String,
     optional: true
+  },
+  final: {
+    type: Boolean,
+    optional: true
   }
 });
 

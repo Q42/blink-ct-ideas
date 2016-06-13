@@ -27,7 +27,10 @@ const Homepage = () => (
       te horen wat zij van je idee vinden.</p>
 
     <p className="calls-to-action">
-      <a href="/nieuw-idee" className="btn-send-idea">Stuur je idee op</a>
+      <a href="/nieuw-idee" className="btn-send-idea">Krijg feedback op je idee</a>
+      <a href="/idee-klaar" className="btn-send-idea">Stuur je idee op naar de jury</a>
+    </p>
+    <p className="calls-to-action">
       <a href="/ideeen" className="btn-show-ideas">Bekijk alle ideeën</a>
     </p>
   </div>

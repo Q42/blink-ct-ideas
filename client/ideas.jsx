@@ -30,16 +30,25 @@ const IdeasPage = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    return {
-      ideas: Ideas.find({},{sort: {updatedDate: -1}}).fetch()
+    let data = {
+      ideas: {
+        ideas: Ideas.find({final: {$ne: true}},{sort: {updatedDate: -1}}).fetch()
+      }
     }
+    if (Meteor.userId()) {
+      data.finals = {
+        ideas: Ideas.find({final: true},{sort: {updatedDate: -1}}).fetch()
+      };
+    }
+    return data;
   },
 
   render() {
     return (
       <div className="pane">
         <a href='/nieuw-idee' className="btn-add-idea"><span>Voeg jouw idee toe</span></a>
-        <IdeasList {...this.data} />
+        <IdeasList {...this.data.ideas} />
+        <IdeasList {...this.data.finals} title="Uiteindelijke ideeën" />
       </div>
     );
   }
@@ -47,6 +56,9 @@ const IdeasPage = React.createClass({
 
 const IdeasList = React.createClass({
   render() {
+    if (!this.props.ideas) {
+      return null;
+    }
     if (!this.props.ideas.length) {
       return (
         <div>
@@ -67,12 +79,16 @@ const IdeasList = React.createClass({
         otherIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
       }
     });
+    const title = this.props.title ? <h2>{this.props.title}</h2> : null;
     const ideasNodes = myIdeasNodes.concat(otherIdeasNodes);
 
     return (
-      <ul className='ideas'>
-        {ideasNodes}
-      </ul>
+      <div>
+        {title}
+        <ul className='ideas'>
+          {ideasNodes}
+        </ul>
+      </div>
     );
   }
 });

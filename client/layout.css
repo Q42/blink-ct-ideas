@@ -135,6 +135,7 @@ h2 em {
 }
 .calls-to-action a {
   display: block;
+  margin: 0 auto;
   border-radius: 20px;
   padding: 90px 20px 10px 20px;
   background-size: 80px 80px;

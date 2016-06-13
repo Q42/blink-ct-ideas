@@ -6,7 +6,16 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route("/nieuw-idee", {
   action() {
     mount(Layout, {
-      content: (<NewIdea />),
+      content: (<NewIdea final={false} />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
+    });
+  }
+});
+
+FlowRouter.route("/idee-klaar", {
+  action() {
+    mount(Layout, {
+      content: (<NewIdea final={true} />),
       homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
@@ -114,7 +123,8 @@ const NewIdea = React.createClass({
         emails: this.state.emails,
         title: this.state.title,
         description: this.state.description,
-        attachments: attachments
+        attachments: attachments,
+        final: this.props.final
       }, (err, _id) => {
         if(err) {
           console.error(err);
@@ -151,16 +161,26 @@ const NewIdea = React.createClass({
     let submitButton;
     if(this.state.uploading) {
       submitButton = <input className="cta" type="submit" value="Bezig met versturen..." disabled="disabled" />;
+    } else if (this.props.final) {
+      submitButton = <input className="cta" type="submit" value="Verstuur naar de jury" />;
     } else {
       submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />;
     }
 
+    let mailTxt = this.props.final ?
+      <p>Vul hier een emailadres in zodat we jullie kunnen laten weten als jullie gewonnen hebben</p> :
+      <p>Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in</p>;
+
+    let h1Txt = this.props.final ?
+      <div><h2>Win een bezoek bij Q42!</h2><p>Wie het beste idee opstuurt, wint een bezoek bij Q42. Dus doe je best!</p></div> :
+      <div><h2>Tof dat je een idee hebt!</h2><p>Vul hier de gegevens over je idee in, en krijg van Lukas of een andere Q42'er feedback over je idee.</p></div>;
+
     return (
       <div className="pane small">
-        <h2>Tof dat je een idee hebt!</h2>
+        {h1Txt}
         <form onSubmit={this.submitForm}>
           <label>
-            Op welke school zitten jullie? (niet verplicht)
+            Op welke school zitten jullie?
             <input name="school" type="text" onChange={this.changeInput} value={this.state.school} />
           </label>
           <label>
@@ -168,7 +188,7 @@ const NewIdea = React.createClass({
             <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
           </label>
           <label>
-            Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42&#39;er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in
+            {mailTxt}
             <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
           </label>
           <label>
