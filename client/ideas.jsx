@@ -12,33 +12,37 @@ FlowRouter.route('/ideeen', {
   }
 });
 
-GlobalIdeas = Ideas;
-
-// no paging, just show everything always, and first 10 quickly
-Meteor.startup(function(){
-  console.time('ideas.paged(1)');
-  Meteor.subscribe('ideas.paged', 1, () => {
-    console.timeEnd('ideas.paged(1)')
-    console.time('ideas.all');
-    Meteor.subscribe('ideas.all', () => {
-      console.timeEnd('ideas.all')
+FlowRouter.route('/topideeen', {
+  action(params, queryParams) {
+    mount(Layout, {
+      content: (<IdeasPage page={queryParams.page} />),
+      homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
-  });
+  }
 });
+
+GlobalIdeas = Ideas;
 
 const IdeasPage = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    let data = {
-      ideas: {
-        ideas: Ideas.find({final: {$ne: true}},{sort: {updatedDate: -1}}).fetch()
+    // no paging, just show everything always, and first 10 quickly
+    console.time('ideas.paged(1)');
+    let handle = Meteor.subscribe('ideas.paged', 1, () => {
+      console.timeEnd('ideas.paged(1)')
+      console.time('ideas.all');
+      Meteor.subscribe('ideas.all', () => {
+        console.timeEnd('ideas.all')
+      });
+    });
+
+    let data = {};
+    if (handle) {
+      data.ideas = {
+        title: "Ideeën",
+        ideas: Ideas.find({},{sort: {createdDate: -1}}).fetch()
       }
-    }
-    if (Meteor.userId()) {
-      data.finals = {
-        ideas: Ideas.find({final: true},{sort: {updatedDate: -1}}).fetch()
-      };
     }
     return data;
   },
@@ -48,7 +52,6 @@ const IdeasPage = React.createClass({
       <div className="pane">
         <a href='/nieuw-idee' className="btn-add-idea"><span>Voeg jouw idee toe</span></a>
         <IdeasList {...this.data.ideas} />
-        <IdeasList {...this.data.finals} title="Uiteindelijke ideeën" />
       </div>
     );
   }

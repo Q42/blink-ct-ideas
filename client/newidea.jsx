@@ -6,16 +6,7 @@ import {Ideas} from '/imports/collections';
 FlowRouter.route("/nieuw-idee", {
   action() {
     mount(Layout, {
-      content: (<NewIdea final={false} />),
-      homeBtn: (<a href="/" className="btn-home">Home</a>)
-    });
-  }
-});
-
-FlowRouter.route("/idee-klaar", {
-  action() {
-    mount(Layout, {
-      content: (<NewIdea final={true} />),
+      content: (<NewIdea />),
       homeBtn: (<a href="/" className="btn-home">Home</a>)
     });
   }
@@ -123,8 +114,7 @@ const NewIdea = React.createClass({
         emails: this.state.emails,
         title: this.state.title,
         description: this.state.description,
-        attachments: attachments,
-        final: this.props.final
+        attachments: attachments
       }, (err, _id) => {
         if(err) {
           console.error(err);
@@ -161,46 +151,37 @@ const NewIdea = React.createClass({
     let submitButton;
     if(this.state.uploading) {
       submitButton = <input className="cta" type="submit" value="Bezig met versturen..." disabled="disabled" />;
-    } else if (this.props.final) {
-      submitButton = <input className="cta" type="submit" value="Verstuur naar de jury" />;
     } else {
       submitButton = <input className="cta" type="submit" value="Verstuur naar het Lab" />;
     }
 
-    let mailTxt = this.props.final ?
-      <p>Vul hier een emailadres in zodat we jullie kunnen laten weten als jullie gewonnen hebben</p> :
-      <p>Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in</p>;
-
-    let h1Txt = this.props.final ?
-      <div><h2>Win een bezoek bij Q42!</h2><p>Wie het beste idee opstuurt, wint een bezoek bij Q42. Dus doe je best!</p></div> :
-      <div><h2>Tof dat je een idee hebt!</h2><p>Vul hier de gegevens over je idee in, en krijg van Lukas of een andere Q42'er feedback over je idee.</p></div>;
-
     return (
       <div className="pane small">
-        {h1Txt}
-        <form onSubmit={this.submitForm}>
+          <h2>Tof dat je een idee hebt!</h2>
+          <p>Vul hier de gegevens over je idee in, en stuur hem naar Q42. Lukas (of een andere Q42'er) kan dan feedback geven!</p>
+          <form onSubmit={this.submitForm}>
           <label>
             Op welke school zitten jullie?
-            <input name="school" type="text" onChange={this.changeInput} value={this.state.school} />
+            <input name="school" type="text" onChange={this.changeInput} />
           </label>
           <label>
             Wat zijn jullie namen?
-            <input name="authors" type="text" onChange={this.changeInput} value={this.state.authors} />
+            <input name="authors" type="text" onChange={this.changeInput} />
           </label>
           <label>
-            {mailTxt}
-            <input name="emails" type="text" onChange={this.changeInput} value={this.state.emails} />
+            <p>Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in</p>
+            <input name="emails" type="text" onChange={this.changeInput} />
           </label>
           <label>
             Wat is de naam van jullie idee?
-            <input name="title" type="text" onChange={this.changeInput} value={this.state.title} />
+            <input name="title" type="text" onChange={this.changeInput} />
           </label>
           <label>
             Schrijf hier kort op wat jullie idee is:
-            <textarea name="description" onChange={this.changeInput}>{this.state.description}</textarea>
+            <textarea name="description" onChange={this.changeInput}></textarea>
           </label>
           <label>
-            En je kan er ook nog foto&#39;s bij doen als je wilt:
+            Voeg ook een schets of collage van jullie idee toe:
             {this.renderFileInput()}
           </label>
           {this.renderProgressBar()}
