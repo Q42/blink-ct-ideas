@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from 'moment';
 import {mount} from 'react-mounter';
 import {Layout} from './imports/layout.jsx';
 import {Ideas} from '/imports/collections';
 import {Commons} from '/helpers';
+import '/imports/moment.nl';
 
 FlowRouter.route('/ideeen/:idea', {
   action(params) {
@@ -51,6 +53,8 @@ const IdeaPage = React.createClass({
       author += ` - ${ this.data.idea.emails }`;
     }
 
+    let createdDate = moment(this.data.idea.createdDate).format('D MMMM YYYY');
+
     let notOK;
     if(this.data.idea.deletedBy) {
       notOK = ` (DELETED)`;
@@ -60,7 +64,7 @@ const IdeaPage = React.createClass({
       <div className="pane">
         <a href="/ideeen" className="back-btn">&lsaquo; Terug naar overzicht</a>
         <h2>{this.data.idea.title}{ notOK }</h2>
-        <h3 className="idea-authors">door {author}</h3>
+        <h3 className="idea-authors">door {author} op {createdDate}</h3>
         <p className="pre">{this.data.idea.description}</p>
         {attachments}
         <Reactions idea={this.data.idea} reactions={this.data.idea.reactions} />
