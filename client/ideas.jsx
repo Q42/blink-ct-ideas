@@ -40,7 +40,6 @@ const IdeasPage = React.createClass({
     let data = {};
     if (handle) {
       data.ideas = {
-        title: "Ideeën",
         ideas: Ideas.find({},{sort: {createdDate: -1}}).fetch()
       }
     }
@@ -82,12 +81,11 @@ const IdeasList = React.createClass({
         otherIdeasNodes.push(<IdeasListItem key={idea._id} idea={idea} />);
       }
     });
-    const title = this.props.title ? <h2>{this.props.title}</h2> : null;
     const ideasNodes = myIdeasNodes.concat(otherIdeasNodes);
 
     return (
       <div>
-        {title}
+        <h2>Alle {this.props.ideas.length} ideeën</h2>
         <ul className='ideas'>
           {ideasNodes}
         </ul>
