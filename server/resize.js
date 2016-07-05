@@ -28,12 +28,12 @@ let _sendSlackMessage = (doc, url) => {
 
 Ideas.after.insert((userId, doc) => {
   const urlEmail = process.env.ROOT_URL + '/ideeen/' + doc._id;
-  Email.send({
-    from: 'no-reply@q42.nl',
-    to: Meteor.settings.EmailNewIdea,
-    subject: 'Nieuw idee op juniorcomputerlab.q42.nl',
-    text: `${ doc.description }\n\n- ${ doc.authors }\n\n${ urlEmail }`
-  });
+  // Email.send({
+  //   from: 'no-reply@q42.nl',
+  //   to: Meteor.settings.EmailNewIdea,
+  //   subject: 'Nieuw idee op juniorcomputerlab.q42.nl',
+  //   text: `${ doc.description }\n\n- ${ doc.authors }\n\n${ urlEmail }`
+  // });
 
   const attachments = doc.attachments;
   if(!attachments || attachments.length === 0) return;
