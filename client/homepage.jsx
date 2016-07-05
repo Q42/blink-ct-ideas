@@ -19,16 +19,19 @@ const Homepage = () => (
       Maar we hebben jullie hulp nodig! We willen ook slimme producten voor kinderen maken.
       En wie kan beter bedenken wat kinderen willen, dan kinderen!?</p>
 
-    <p>Dus laat ons weten welke gave ideeën jij kunt bedenken, en stuur ze naar ons op.
-      Het groepje met het beste idee mag bij Q42 langs komen om het idee te presenteren.
-      En natuurlijk om van de glijbaan te gaan, te hoela-hoepen en te gamen!</p>
-
-    <p>Als je je e-mailadres achter laat, dan krijg je van Lukas, Kristin of een andere Q42'er
-      te horen wat zij van je idee vinden.</p>
+    <p>Dus laat ons weten welke gave ideeën jij kunt bedenken, en stuur ze naar ons op.</p>
 
     <p className="calls-to-action">
       <a href="/nieuw-idee" className="btn-send-idea">Stuur je idee naar Q42</a>
       <a href="/ideeen" className="btn-show-ideas">Bekijk alle ideeën</a>
     </p>
+    <p>&nbsp;</p>
+
+    <h3>Winnaar bekend!</h3>
+    <p>Groepen die hun idee voor juni 2016 ingezonden hebben, deden mee aan een prijsvraag.
+      De klas met het winnende idee mocht bij Q42 langs komen en kreeg een programmeer workshop van Master Lukas!</p>
+    <p>Door een vakkundige jury van Q42, Blink en CodeUur is <a href="/ideeen/4e4dLzsuW9yCHdnbF">MIC 3000</a> gekozen tot het
+      beste idee uit de ideeënbus! <a href="https://www.q42.nl/blog/post/146895610733/winnende-leerlingen-smart-life-bij-q42-aan-de-slag">Lees hier een verslag van hun dag bij Q42</a>.</p>
+    <p><i>De prijsvraag is inmiddels gesloten, maar je kunt je idee nog steeds naar de Q42 Ideeënbus sturen.</i></p>
   </div>
 );
