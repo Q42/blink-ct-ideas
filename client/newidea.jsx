@@ -169,7 +169,7 @@ const NewIdea = React.createClass({
             <input name="authors" type="text" onChange={this.changeInput} />
           </label>
           <label>
-            <p>Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee heeft gereageerd?<br />Vul dan hier een e-mailadres in</p>
+            <p>Wil je een mailtje ontvangen als Lukas, Kristin, of een andere Q42'er op jullie idee reageert?<br />Vul dan hier een e-mailadres in</p>
             <input name="emails" type="text" onChange={this.changeInput} />
           </label>
           <label>
