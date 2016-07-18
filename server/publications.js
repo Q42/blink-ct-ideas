@@ -9,7 +9,7 @@ Meteor.publish('ideas.paged', function(page) {
   let query = {};
   query.deletedBy = null;
   page = Math.max(page, 1);
-  console.log('publishing ideas.paged', page);
+  // console.log('publishing ideas.paged', page);
   return Ideas.find(query, {
     sort: { createdDate: -1 },
     limit: ITEMS_PER_PAGE,
@@ -22,7 +22,7 @@ Meteor.publish('ideas.all', function() {
   let query = {};
   query.deletedBy = null;
 
-  console.log('publishing ideas.all');
+  // console.log('publishing ideas.all');
   return Ideas.find(query, {
     sort: { createdDate: -1 },
     fields: OVERVIEW_FIELDS
